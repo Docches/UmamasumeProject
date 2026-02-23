@@ -1,1 +1,1 @@
-Lavoro di gruppo per il gioco del Guarducci, se qualcuno vuole aggiungere delle immagini direttamente da qua, contattateci in privato. Owais monello
+Lavoro di gruppo della classe 4ID A.S. 2025/26, direttore del progetto: Owais Mounir.
