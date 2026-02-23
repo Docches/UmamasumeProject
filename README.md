@@ -1,0 +1,1 @@
+Lavoro di gruppo per il gioco del Guarducci, se qualcuno vuole aggiungere delle immagini direttamente da qua, contattateci in privato. Owais monello
