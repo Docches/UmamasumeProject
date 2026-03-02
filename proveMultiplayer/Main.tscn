@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dyrorgswcqlpk"]
+
+[ext_resource type="Script" uid="uid://k473e48agx48" path="res://main.gd" id="1_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://nqxpio8camhq" path="res://Player.tscn" id="2_r0du0"]
+
+[node name="Main" type="Node2D" unique_id=129213335]
+script = ExtResource("1_uu6xs")
+player_scene = ExtResource("2_r0du0")
+
+[node name="Level" type="Node2D" parent="." unique_id=1144303989]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1270622141]
+_spawnable_scenes = PackedStringArray("uid://nqxpio8camhq")
+spawn_path = NodePath("../Level")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=621959578]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=1397614685]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BtnJoin" type="Button" parent="CanvasLayer/HBoxContainer" unique_id=1566853844]
+layout_mode = 2
+text = "Join"
+
+[node name="BtnHost" type="Button" parent="CanvasLayer/HBoxContainer" unique_id=1125303546]
+layout_mode = 2
+text = "Host"
+
+[node name="AddressInput" type="LineEdit" parent="CanvasLayer" unique_id=295787569]
+offset_left = 1.0
+offset_top = 45.0
+offset_right = 183.0
+offset_bottom = 76.0
+placeholder_text = "Inserisci ip:"
+
+[node name="PortInput" type="LineEdit" parent="CanvasLayer" unique_id=588325118]
+offset_left = 1.0
+offset_top = 80.0
+offset_right = 183.0
+offset_bottom = 111.0
+placeholder_text = "Inserisci la porta:"
+
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/BtnJoin" to="." method="_on_btn_join_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/BtnHost" to="." method="_on_btn_host_pressed"]
