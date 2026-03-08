@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://dyrorgswcqlpk"]
+
+[ext_resource type="Script" uid="uid://k473e48agx48" path="res://main.gd" id="1_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://nqxpio8camhq" path="res://Running.tscn" id="2_r0du0"]
+
+[node name="Main" type="Node2D" unique_id=129213335]
+script = ExtResource("1_uu6xs")
+player_scene = ExtResource("2_r0du0")
+
+[node name="Level" type="Node2D" parent="." unique_id=1144303989]
+
+[node name="ColorRect" type="ColorRect" parent="Level" unique_id=512154999]
+offset_left = 280.88715
+offset_top = 646.97235
+offset_right = 357.06427
+offset_bottom = 711.66956
+scale = Vector2(-3.687, -10)
+color = Color(0.5592393, 1, 0.56941515, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Level" unique_id=2005784171]
+offset_left = 562.0
+offset_top = 646.97235
+offset_right = 638.1771
+offset_bottom = 711.66956
+scale = Vector2(-3.687, -10)
+color = Color(2.1562577e-05, 0.96352834, 0.23231947, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="Level" unique_id=2072453001]
+offset_left = 844.0
+offset_top = 646.97235
+offset_right = 920.1771
+offset_bottom = 711.66956
+scale = Vector2(-3.687, -10)
+color = Color(0.5592393, 1, 0.56941515, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="Level" unique_id=662121911]
+offset_left = 1123.0
+offset_top = 646.97235
+offset_right = 1199.1771
+offset_bottom = 711.66956
+scale = Vector2(-3.687, -10)
+color = Color(0, 0.9647059, 0.23137255, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=621959578]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=1397614685]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BtnJoin" type="Button" parent="CanvasLayer/HBoxContainer" unique_id=1566853844]
+layout_mode = 2
+text = "Join"
+
+[node name="BtnHost" type="Button" parent="CanvasLayer/HBoxContainer" unique_id=1125303546]
+layout_mode = 2
+text = "Host"
+
+[node name="AddressInput" type="LineEdit" parent="CanvasLayer" unique_id=295787569]
+offset_left = 1.0
+offset_top = 45.0
+offset_right = 183.0
+offset_bottom = 76.0
+placeholder_text = "Inserisci ip:"
+
+[node name="PortInput" type="LineEdit" parent="CanvasLayer" unique_id=588325118]
+offset_left = 1.0
+offset_top = 80.0
+offset_right = 183.0
+offset_bottom = 111.0
+placeholder_text = "Inserisci la porta:"
+
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/BtnJoin" to="." method="_on_btn_join_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/BtnHost" to="." method="_on_btn_host_pressed"]
