@@ -19,7 +19,7 @@ func _ready() -> void:
 	restore_board_state()
 	update_leaderboard()
 	
-	# Controllo Bonus Minigioco!
+	# Controllo Bonus Minigioco
 	if not GlobalData.minigame_winners.is_empty():
 		if multiplayer.is_server():
 			apply_minigame_bonus.rpc(GlobalData.minigame_winners)
@@ -42,7 +42,7 @@ func apply_minigame_bonus(winners: Array):
 		
 	update_leaderboard()
 	if multiplayer.is_server():
-		GlobalData.minigame_winners.clear() # Resettiamo i vincitori
+		GlobalData.minigame_winners.clear() 
 		sync_state.rpc(GlobalData.current_player_index)
 
 func restore_board_state() -> void:
@@ -79,7 +79,7 @@ func _process(delta: float) -> void:
 		var current_p = GlobalData.players_data[GlobalData.current_player_index]
 		if current_p["is_bot"]:
 			current_state = GameState.WAITING_FOR_MINIGAME 
-			await get_tree().create_timer(1.0).timeout # Il bot "pensa" un secondo
+			await get_tree().create_timer(1.0).timeout 
 			execute_turn_server()
 
 # --- LOGICA DEL DADO E MOVIMENTO ---
@@ -89,24 +89,19 @@ func execute_turn_server() -> void:
 	var steps = randi_range(1, 6)
 	var current_p_index = GlobalData.current_player_index
 	
-	# 1. Diciamo a tutti di far partire l'animazione del dado
 	animate_dice_roll.rpc(steps)
-	
-	# 2. Il server aspetta che l'animazione finisca (1.5 secondi)
 	await get_tree().create_timer(1.5).timeout
-	
-	# 3. Ora diciamo a tutti di muovere il pedone
 	sync_movement.rpc(current_p_index, steps)
 
 @rpc("call_local", "authority")
 func animate_dice_roll(final_steps: int):
 	current_state = GameState.ROLLING
-	# Creiamo l'effetto "slot machine" dei numeri
+
 	for i in range(10):
 		dice_label.text = "[ " + str(randi_range(1, 6)) + " ]"
 		await get_tree().create_timer(0.1).timeout
 	
-	# Mostriamo il numero finale vero
+	
 	dice_label.text = "[ " + str(final_steps) + " ]"
 
 @rpc("call_local", "authority")
@@ -117,7 +112,7 @@ func sync_movement(p_index: int, steps: int):
 	await active_player.movement_finished
 	
 	GlobalData.player_space_indices[p_index] = active_player.current_space_index
-	update_leaderboard() # Aggiorna la classifica dopo essersi mossi
+	update_leaderboard() 
 	
 	if multiplayer.is_server():
 		end_turn_server()
@@ -135,7 +130,7 @@ func end_turn_server() -> void:
 func sync_state(next_player_index):
 	GlobalData.current_player_index = next_player_index
 	current_state = GameState.IDLE
-	update_ui(next_player_index) # Aggiorna le scritte per il nuovo turno
+	update_ui(next_player_index) 
 
 # --- AGGIORNAMENTO UI VISIVA ---
 
@@ -148,7 +143,6 @@ func update_ui(p_index: int):
 		testo_turno += " (BOT)"
 	turn_label.text = testo_turno
 	
-	# Scritta del dado
 	if current_p["is_bot"]:
 		dice_label.text = "[ Il Bot sta tirando... ]"
 	elif current_p["id"] == multiplayer.get_unique_id():
@@ -161,14 +155,13 @@ func update_leaderboard():
 	var testo_classifica = "--- CLASSIFICA ---\n"
 	var board_data = []
 	
-	# Raccogliamo i dati per ordinarli
+
 	for i in range(GlobalData.players_data.size()):
 		board_data.append({"player": i + 1, "space": GlobalData.player_space_indices[i]})
 		
-	# Ordiniamo l'array: chi ha il numero di "space" più alto sta vincendo
 	board_data.sort_custom(func(a, b): return a["space"] > b["space"])
 	
-	# Scriviamo il testo
+	
 	for i in range(board_data.size()):
 		var data = board_data[i]
 		testo_classifica += str(i + 1) + "° - Giocatore " + str(data["player"]) + " (Casella " + str(data["space"]) + ")\n"

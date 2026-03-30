@@ -126,7 +126,7 @@ func _input(event: InputEvent) -> void:
 		elif event.is_action_pressed("down"):
 			request_sweep.rpc_id(1, Vector2(0, 1))
 
-# RISOLTO: Ora call_local permette anche all'Host di giocare i propri turni!
+
 @rpc("any_peer", "call_local")
 func request_throw(impulse: Vector2):
 	if multiplayer.is_server():
@@ -136,7 +136,7 @@ func request_throw(impulse: Vector2):
 func execute_throw(impulse: Vector2):
 	if current_stone:
 		if multiplayer.is_server():
-			current_stone.sleeping = false # SVEGLIA! Così non ignora l'impulso.
+			current_stone.sleeping = false 
 			current_stone.apply_central_impulse(impulse)
 		active_stone = current_stone
 		current_stone = null
@@ -165,7 +165,7 @@ func _physics_process(delta: float) -> void:
 	if multiplayer.is_server():
 		handle_bots(delta)
 		
-		# NUOVO SISTEMA DI SYNC: Aggiorniamo tutte le pietre in un colpo solo!
+		
 		var all_stones = get_tree().get_nodes_in_group("stones")
 		var pos_array = []
 		var rot_array = []
@@ -180,7 +180,7 @@ func _physics_process(delta: float) -> void:
 				active_stone.linear_velocity = Vector2.ZERO
 				end_turn_server()
 
-# Aggiorniamo le posizioni sul Client
+
 @rpc("unreliable", "call_remote", "authority")
 func sync_all_stones(pos_array: Array, rot_array: Array):
 	var all_stones = get_tree().get_nodes_in_group("stones")
@@ -239,14 +239,11 @@ func spawn_stone() -> void:
 	current_stone.linear_damp_mode = RigidBody2D.DAMP_MODE_REPLACE
 	current_stone.linear_damp = ICE_DAMPING
 	
-	# TRUCCO MAGICO: Il Client congela la pietra, diventando un puro spettatore visivo!
 	if not multiplayer.is_server():
 		current_stone.freeze = true
 	
 	add_child(current_stone)
-	
-	var screen_size = get_viewport_rect().size
-	current_stone.position = Vector2(100, screen_size.y / 2.0)
+	current_stone.position = Vector2(100, 360)
 	
 func aggiorna_ui() -> void:
 	var nome_team = "Team 1 (Rosso)" if current_turn == 0 else "Team 2 (Giallo)"

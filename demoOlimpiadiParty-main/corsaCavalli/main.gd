@@ -15,7 +15,7 @@ var track_positions = [
 	Vector2(100, 550)
 ]
 
-var horse_owners = [-1, -1, -1, -1] # Salva chi possiede quale cavallo
+var horse_owners = [-1, -1, -1, -1] 
 var humans_to_pick = 0
 var humans_picked = 0
 var horses = {} 
@@ -23,12 +23,10 @@ var finish_order = []
 
 func _ready():
 	if multiplayer.is_server():
-		# Il server conta quanti umani devono scegliere
 		for p in GlobalData.players_data:
 			if not p["is_bot"]:
 				humans_to_pick += 1
 				
-	# Colleghiamo i bottoni localmente
 	for i in range(4):
 		buttons[i].pressed.connect(func(): _on_horse_btn_pressed(i))
 
@@ -42,7 +40,7 @@ func _on_horse_btn_pressed(horse_index: int):
 	if my_player_index != -1:
 		request_horse.rpc_id(1, my_player_index, horse_index)
 
-# --- LOGICA DI ASSEGNAZIONE ---
+#LOGICA DI ASSEGNAZIONE
 
 @rpc("any_peer", "call_remote")
 func request_horse(player_index: int, horse_index: int):
@@ -67,10 +65,9 @@ func assign_bots_and_start():
 	for i in range(bot_indices.size()):
 		assign_horse_rpc.rpc(free_horses[i], bot_indices[i])
 		
-	# Invece di partire subito, avviamo il countdown!
 	start_countdown_rpc.rpc()
 
-# QUESTA ERA LA FUNZIONE SPARITA!
+
 @rpc("call_local", "authority")
 func assign_horse_rpc(horse_index: int, player_index: int):
 	horse_owners[horse_index] = player_index
@@ -86,11 +83,10 @@ func assign_horse_rpc(horse_index: int, player_index: int):
 		for btn in buttons:
 			btn.disabled = true
 
-# --- COUNTDOWN E GARA ---
+#COUNTDOWN E GARA
 
 @rpc("call_local", "authority")
 func start_countdown_rpc():
-	# Nascondiamo i bottoni di scelta
 	for btn in buttons: btn.hide()
 	#for lbl in labels: lbl.hide()
 	

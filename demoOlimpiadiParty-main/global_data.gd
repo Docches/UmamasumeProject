@@ -18,9 +18,9 @@ var minigame_winners: Array[int] = []
 
 func host_game():
 	is_server = true
-	peer.create_server(DEFAULT_PORT, 5) # 4 giocatori + 1 server regista
+	peer.create_server(DEFAULT_PORT, 5)
 	multiplayer.multiplayer_peer = peer
-	print("Server avviato (Regista)")
+	print("Server avviato")
 
 func join_game(ip: String):
 	is_server = false
