@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b21j8qurrrqjx"]
+
+[ext_resource type="PackedScene" uid="uid://dedh28h7l7yn6" path="res://saltoInLungo/player.tscn" id="1_6dkcd"]
+[ext_resource type="Script" uid="uid://dgth4kgvqufsj" path="res://saltoInLungo/main.gd" id="1_ex0w4"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_ex0w4")
+
+[node name="Spawn" type="Marker2D" parent="."]
+
+[node name="FoulLine" type="Marker2D" parent="."]
+position = Vector2(467, 0)
+
+[node name="Player" parent="." instance=ExtResource("1_6dkcd")]
+position = Vector2(16, -32)

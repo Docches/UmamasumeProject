@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dedh28h7l7yn6"]
+
+[ext_resource type="Script" uid="uid://c4enx7n0srtwh" path="res://saltoInLungo/player.gd" id="1_jxbv4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ar63e"]
+size = Vector2(31, 63)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ar63e"]
+width = 32
+height = 64
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_ar63e")
+script = ExtResource("1_jxbv4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("NoiseTexture2D_ar63e")
