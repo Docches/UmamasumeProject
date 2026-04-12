@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://dd4j402gyn5q6" path="res://nuoto/nuoto.tscn" id="6_y6alk"]
 [ext_resource type="PackedScene" uid="uid://b3q1214wxtoh2" path="res://rigori-calcio-v-3multiplayer/Scene/game.tscn" id="7_dk6cw"]
 [ext_resource type="PackedScene" uid="uid://dcvwpppjylq8x" path="res://tiroAllaFune/fune.tscn" id="8_y6cgs"]
-[ext_resource type="PackedScene" uid="uid://dtpdqd3hhamv8" path="res://triathlon/triathlon.tscn" id="9_58o12"]
 [ext_resource type="VideoStream" uid="uid://1u8vxpvsqkyj" path="res://tabellone/umas/Congratulazioni_Giocatore_1.ogv" id="14_58o12"]
 [ext_resource type="VideoStream" uid="uid://b46nw4saconce" path="res://tabellone/umas/Congratulazioni_Giocatore_2.ogv" id="15_fhjsv"]
 [ext_resource type="VideoStream" uid="uid://ddq63kejnisy1" path="res://tabellone/umas/Congratulazioni_Giocatore_3.ogv" id="16_7kv8j"]
@@ -41,7 +40,7 @@ corner_radius_bottom_left = 12
 
 [node name="tabellone" type="Node2D" unique_id=1996816307]
 script = ExtResource("1_6xf64")
-minigame_scenes = Array[PackedScene]([ExtResource("2_fq3et"), ExtResource("7_dk6cw"), ExtResource("2_2fsle"), ExtResource("4_2fsle"), ExtResource("2_185ah"), ExtResource("3_dnsta"), ExtResource("5_fq3et"), ExtResource("6_y6alk"), ExtResource("8_y6cgs"), ExtResource("9_58o12"), ExtResource("2_185ah")])
+minigame_scenes = Array[PackedScene]([ExtResource("2_fq3et"), ExtResource("7_dk6cw"), ExtResource("2_2fsle"), ExtResource("4_2fsle"), ExtResource("2_185ah"), ExtResource("3_dnsta"), ExtResource("5_fq3et"), ExtResource("6_y6alk"), ExtResource("8_y6cgs"), ExtResource("2_185ah")])
 
 [node name="Background" type="Panel" parent="." unique_id=755147223]
 z_index = -1
