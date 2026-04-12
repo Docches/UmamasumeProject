@@ -1,0 +1,442 @@
+[gd_scene format=3 uid="uid://b8x7xxyy0001"]
+
+[ext_resource type="Script" uid="uid://bd45fxn8l8jke" path="res://100m-Umas/corsa_100m.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b7amwolisyl4m" path="res://100m-Umas/pista-100m.png" id="2_sfondo"]
+[ext_resource type="Texture2D" uid="uid://brlhaiukthteh" path="res://100m-Umas/kitasan-black/kibl730_00.png.png" id="3_sx62n"]
+[ext_resource type="Texture2D" uid="uid://cppsc12vx3fyb" path="res://100m-Umas/kitasan-black/kibl730_01.png.png" id="4_hcvcl"]
+[ext_resource type="Texture2D" uid="uid://d0ptay6an2al4" path="res://100m-Umas/kitasan-black/kibl730_02.png.png" id="5_hs4e3"]
+[ext_resource type="Texture2D" uid="uid://c3wphxhdaesj7" path="res://100m-Umas/kitasan-black/kibl730_03.png.png" id="6_5olcq"]
+[ext_resource type="Texture2D" uid="uid://cj8qyfn5wan3l" path="res://100m-Umas/kitasan-black/kibl701_00.png.png" id="7_srndj"]
+[ext_resource type="Texture2D" uid="uid://bi44oi4n8s2em" path="res://100m-Umas/kitasan-black/kibl701_01.png.png" id="8_a55xv"]
+[ext_resource type="Texture2D" uid="uid://cymn3ossu87rh" path="res://100m-Umas/kitasan-black/kibl701_02.png.png" id="9_ntvix"]
+[ext_resource type="Texture2D" uid="uid://icmp1c3spw6q" path="res://100m-Umas/kitasan-black/kibl701_03.png.png" id="10_smxcq"]
+[ext_resource type="Texture2D" uid="uid://cx5on7qm0d7q3" path="res://100m-Umas/kitasan-black/kibl701_04.png.png" id="11_ker6j"]
+[ext_resource type="Texture2D" uid="uid://vcqv22barlr7" path="res://100m-Umas/kitasan-black/kibl701_05.png.png" id="12_usjo3"]
+[ext_resource type="Texture2D" uid="uid://bq0nf4qaucuo7" path="res://100m-Umas/kitasan-black/kibl701_06.png.png" id="13_w5rct"]
+[ext_resource type="Texture2D" uid="uid://b8wdjpvyk7alp" path="res://100m-Umas/kitasan-black/kibl701_07.png.png" id="14_ohfw1"]
+[ext_resource type="Texture2D" uid="uid://o5d7g3s7inaf" path="res://100m-Umas/satono-diamond/sada730_00.png.png" id="15_luetg"]
+[ext_resource type="Texture2D" uid="uid://cvtklr3ufus5m" path="res://100m-Umas/satono-diamond/sada730_01.png.png" id="16_qqvqc"]
+[ext_resource type="Texture2D" uid="uid://byj0wb788m4su" path="res://100m-Umas/satono-diamond/sada730_02.png.png" id="17_l1p2q"]
+[ext_resource type="Texture2D" uid="uid://cqakwc4ggpj4a" path="res://100m-Umas/satono-diamond/sada730_03.png.png" id="18_bbvle"]
+[ext_resource type="Texture2D" uid="uid://benkditrycgmp" path="res://100m-Umas/satono-diamond/sada701_00.png.png" id="19_3dq83"]
+[ext_resource type="Texture2D" uid="uid://baypt2l6dsf3s" path="res://100m-Umas/satono-diamond/sada701_01.png.png" id="20_tw1n0"]
+[ext_resource type="Texture2D" uid="uid://cis8habfh40et" path="res://100m-Umas/satono-diamond/sada701_02.png.png" id="21_ql54y"]
+[ext_resource type="Texture2D" uid="uid://dclqqdwuv4p0x" path="res://100m-Umas/satono-diamond/sada701_03.png.png" id="22_h6wp5"]
+[ext_resource type="Texture2D" uid="uid://cgxknj8jw6n2r" path="res://100m-Umas/satono-diamond/sada701_04.png.png" id="23_6df7h"]
+[ext_resource type="Texture2D" uid="uid://dkcuw3mqgw2sx" path="res://100m-Umas/satono-diamond/sada701_05.png.png" id="24_hbc7f"]
+[ext_resource type="Texture2D" uid="uid://cmg4yr15p17fi" path="res://100m-Umas/satono-diamond/sada701_06.png.png" id="25_mrwve"]
+[ext_resource type="Texture2D" uid="uid://dg76gnh3wtq3b" path="res://100m-Umas/satono-diamond/sada701_07.png.png" id="26_qb35h"]
+[ext_resource type="Texture2D" uid="uid://cgkto7blo3wxo" path="res://100m-Umas/oguri-cap/ogcp704_00.png.png" id="27_4cx44"]
+[ext_resource type="Texture2D" uid="uid://cdb3x7lyf8e46" path="res://100m-Umas/oguri-cap/ogcp704_01.png.png" id="28_ciiwh"]
+[ext_resource type="Texture2D" uid="uid://b845nqx8usmdg" path="res://100m-Umas/oguri-cap/ogcp704_02.png.png" id="29_pljnc"]
+[ext_resource type="Texture2D" uid="uid://bcueqqf22y2wd" path="res://100m-Umas/oguri-cap/ogcp705_00.png.png" id="30_ootu6"]
+[ext_resource type="Texture2D" uid="uid://cmnec7vbqxgu" path="res://100m-Umas/oguri-cap/ogcp705_01.png.png" id="31_m1xc4"]
+[ext_resource type="Texture2D" uid="uid://bgx3e6mfm43tt" path="res://100m-Umas/oguri-cap/ogcp705_02.png.png" id="32_vflgt"]
+[ext_resource type="Texture2D" uid="uid://257c0flm505q" path="res://100m-Umas/oguri-cap/ogcp701_00.png.png" id="33_nbuvr"]
+[ext_resource type="Texture2D" uid="uid://dmfmb8r0u5xb6" path="res://100m-Umas/oguri-cap/ogcp701_01.png.png" id="34_qsp1o"]
+[ext_resource type="Texture2D" uid="uid://bbxu1ai2vg4uj" path="res://100m-Umas/oguri-cap/ogcp701_02.png.png" id="35_cml4v"]
+[ext_resource type="Texture2D" uid="uid://bx1w8y0vr8jrr" path="res://100m-Umas/oguri-cap/ogcp701_03.png.png" id="36_odwyl"]
+[ext_resource type="Texture2D" uid="uid://wx8ekis3n7wj" path="res://100m-Umas/oguri-cap/ogcp701_04.png.png" id="37_dhsex"]
+[ext_resource type="Texture2D" uid="uid://3ssmkeglh8vv" path="res://100m-Umas/oguri-cap/ogcp701_05.png.png" id="38_epn3d"]
+[ext_resource type="Texture2D" uid="uid://dps2ocsfwdsrv" path="res://100m-Umas/oguri-cap/ogcp701_06.png.png" id="39_l5u2u"]
+[ext_resource type="Texture2D" uid="uid://bcxghpvyd0upo" path="res://100m-Umas/oguri-cap/ogcp701_07.png.png" id="40_fbm0h"]
+[ext_resource type="Texture2D" uid="uid://bsy5fx4l5m0e" path="res://100m-Umas/special-week/spwe703_00.png.png" id="41_3qw1f"]
+[ext_resource type="Texture2D" uid="uid://cmh0p8ddivs1k" path="res://100m-Umas/special-week/spwe703_01.png.png" id="42_y86et"]
+[ext_resource type="Texture2D" uid="uid://b8gu03sed8vej" path="res://100m-Umas/special-week/spwe703_02.png.png" id="43_n1fc8"]
+[ext_resource type="Texture2D" uid="uid://dpq8wc0kne5vo" path="res://100m-Umas/special-week/spwe701_00.png.png" id="44_31nd3"]
+[ext_resource type="Texture2D" uid="uid://3p5u4affkfst" path="res://100m-Umas/special-week/spwe701_01.png.png" id="45_br1yy"]
+[ext_resource type="Texture2D" uid="uid://8d2waavbbq58" path="res://100m-Umas/special-week/spwe701_02.png.png" id="46_r0ot4"]
+[ext_resource type="Texture2D" uid="uid://d2vlqvhk3md4e" path="res://100m-Umas/special-week/spwe701_03.png.png" id="47_8frmd"]
+[ext_resource type="Texture2D" uid="uid://chdvc6lor016q" path="res://100m-Umas/special-week/spwe701_04.png.png" id="48_3loev"]
+[ext_resource type="Texture2D" uid="uid://c5278nuw2w4e4" path="res://100m-Umas/special-week/spwe701_05.png.png" id="49_6hb0m"]
+[ext_resource type="Texture2D" uid="uid://iql4ee6p5fg2" path="res://100m-Umas/special-week/spwe701_06.png.png" id="50_ndrwi"]
+[ext_resource type="Texture2D" uid="uid://0vahgwskmmwa" path="res://100m-Umas/special-week/spwe701_07.png.png" id="51_jk2yv"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0c6v8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_sx62n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hcvcl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hs4e3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_5olcq")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_srndj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_a55xv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ntvix")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_smxcq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ker6j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_usjo3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_w5rct")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ohfw1")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"stumble",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_names"]
+font_size = 20
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rd376"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_luetg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_qqvqc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_l1p2q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_bbvle")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_3dq83")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_tw1n0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_ql54y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_h6wp5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_6df7h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_hbc7f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_mrwve")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_qb35h")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"stumble",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m4qoo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("27_4cx44")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_ciiwh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_pljnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_ootu6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_m1xc4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_vflgt")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("33_nbuvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_qsp1o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_cml4v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_odwyl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_dhsex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_epn3d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_l5u2u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_fbm0h")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"stumble",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ockdq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("41_3qw1f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_y86et")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_n1fc8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("44_31nd3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_br1yy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_r0ot4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_8frmd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_3loev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_6hb0m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_ndrwi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_jk2yv")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"stumble",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_istruzioni"]
+font_size = 28
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_info"]
+font_size = 50
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qte"]
+font_size = 40
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+
+[node name="corsa_100m" type="Node2D" unique_id=1780503228]
+script = ExtResource("1_script")
+
+[node name="Sfondo" type="Sprite2D" parent="." unique_id=1298369328]
+z_index = -10
+position = Vector2(576.5, 323.99997)
+scale = Vector2(0.9097387, 1.571776)
+texture = ExtResource("2_sfondo")
+
+[node name="Giocatori" type="Node2D" parent="." unique_id=1676430286]
+z_index = 5
+
+[node name="P0" type="AnimatedSprite2D" parent="Giocatori" unique_id=183984922]
+position = Vector2(54, 63)
+scale = Vector2(2.1796875, 2.09375)
+sprite_frames = SubResource("SpriteFrames_0c6v8")
+animation = &"idle"
+
+[node name="NameLabel" type="Label" parent="Giocatori/P0" unique_id=1002573907]
+offset_left = -70.65233
+offset_top = -32.955223
+offset_right = 73.405014
+offset_bottom = -4.955223
+text = "Player 1"
+label_settings = SubResource("LabelSettings_names")
+horizontal_alignment = 1
+
+[node name="P1" type="AnimatedSprite2D" parent="Giocatori" unique_id=1331296298]
+position = Vector2(57, 222)
+scale = Vector2(2.1875002, 2.0625002)
+sprite_frames = SubResource("SpriteFrames_rd376")
+animation = &"idle"
+
+[node name="NameLabel" type="Label" parent="Giocatori/P1" unique_id=2061394930]
+offset_left = -70.399994
+offset_top = -35.878788
+offset_right = 79.600006
+offset_bottom = -5.878788
+text = "Player 2"
+label_settings = SubResource("LabelSettings_names")
+horizontal_alignment = 1
+
+[node name="P2" type="AnimatedSprite2D" parent="Giocatori" unique_id=972546091]
+position = Vector2(52, 388.00003)
+scale = Vector2(1.78125, 1.640625)
+sprite_frames = SubResource("SpriteFrames_m4qoo")
+animation = &"idle"
+
+[node name="NameLabel" type="Label" parent="Giocatori/P2" unique_id=1098526330]
+offset_left = -71.29825
+offset_top = -43.88573
+offset_right = 78.70175
+offset_bottom = -13.885731
+text = "Player 3"
+label_settings = SubResource("LabelSettings_names")
+horizontal_alignment = 1
+
+[node name="P3" type="AnimatedSprite2D" parent="Giocatori" unique_id=1538875098]
+position = Vector2(44, 549)
+scale = Vector2(1.90625, 1.78125)
+sprite_frames = SubResource("SpriteFrames_ockdq")
+animation = &"idle"
+
+[node name="NameLabel" type="Label" parent="Giocatori/P3" unique_id=870589950]
+offset_left = -65.04919
+offset_top = -44.91228
+offset_right = 84.95081
+offset_bottom = -14.912281
+text = "Player 4"
+label_settings = SubResource("LabelSettings_names")
+horizontal_alignment = 1
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1620426440]
+
+[node name="IstruzioniPanel" type="ColorRect" parent="UI" unique_id=2085682678]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -180.0
+offset_right = 450.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.85)
+
+[node name="IstruzioniTesto" type="Label" parent="UI/IstruzioniPanel" unique_id=1913606110]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = " 10 Scatti per la vittoria!
+ Più vai avanti, più la sequenza si allunga! (Fino a 10 tasti!)
+ Completala: Avanzi di una casella.
+ Sbagli un tasto: Torni indietro!
+
+COMANDI: ↑↓←→"
+label_settings = SubResource("LabelSettings_istruzioni")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoLabel" type="Label" parent="UI" unique_id=403978843]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 20.0
+offset_bottom = 90.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_info")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FeedbackPanel" type="ColorRect" parent="UI" unique_id=1209958289]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -60.0
+offset_right = 400.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="QTELabel" type="Label" parent="UI" unique_id=1038064357]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -50.0
+offset_right = 500.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_qte")
+horizontal_alignment = 1
+vertical_alignment = 1

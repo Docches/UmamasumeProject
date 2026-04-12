@@ -12,55 +12,52 @@ var current_state = GameState.WAITING
 var progress = [0.0, 0.0, 0.0, 0.0]
 var bot_timers = [0.0, 0.0, 0.0, 0.0]
 
-# Mappa l'indice della corsia (0-3) all'ID del Peer (0 = Bot)
-var lane_assignments = {0: 0, 1: 0, 2: 0, 3: 0} 
-
 @onready var giocatori_nodes = [$Lanes/P0, $Lanes/P1, $Lanes/P2, $Lanes/P3]
 @onready var nomi_labels = [$UI/NomiContainer/Nome0, $UI/NomiContainer/Nome1, $UI/NomiContainer/Nome2, $UI/NomiContainer/Nome3]
 @onready var countdown_label = $UI/CountdownLabel
 @onready var winner_label = $UI/WinnerLabel
 
 func _ready():
+	randomize()
 	winner_label.hide()
 	countdown_label.show()
 	
+	# PREVENZIONE CRASH: Test Standalone (F6)
+	if GlobalData.players_data.is_empty():
+		print("ATTENZIONE: Avvio Standalone. Generazione Bot in corso...")
+		var peer = ENetMultiplayerPeer.new()
+		peer.create_server(12345, 4)
+		multiplayer.multiplayer_peer = peer
+		for i in range(4):
+			GlobalData.players_data.append({"id": i+1, "is_bot": i > 0})
+	
 	if multiplayer.is_server():
-		_assign_lanes()
-		rpc("_setup_game_clients", lane_assignments)
+		_setup_game_clients.rpc()
 		start_countdown()
 
 # --- SETUP E SINCRONIZZAZIONE LOBBY ---
-func _assign_lanes():
-	var peers = multiplayer.get_peers()
-	
-	var all_players = []
-	all_players.append(1)
-
-	for p in peers:
-		all_players.append(p)
-	
-	for i in range(4):
-		if i < all_players.size():
-			lane_assignments[i] = int(all_players[i]) 
-		else:
-			lane_assignments[i] = 0 
-
 @rpc("authority", "call_local", "reliable")
-func _setup_game_clients(assignments: Dictionary):
-	lane_assignments = assignments
+func _setup_game_clients():
+	var my_id = multiplayer.get_unique_id()
 	
 	for i in range(4):
 		progress[i] = 0.0
 		giocatori_nodes[i].position.y = start_y
 		
-		# Imposta il nome della corsia in basso
-		var id = lane_assignments[i]
-		if id == 0:
-			nomi_labels[i].text = "Bot " + str(i + 1)
-		elif id == multiplayer.get_unique_id():
-			nomi_labels[i].text = "Tu (P" + str(i + 1) + ")"
+		# Associa ogni corsia al rispettivo giocatore nel GlobalData
+		if i < GlobalData.players_data.size():
+			var p_data = GlobalData.players_data[i]
+			giocatori_nodes[i].show()
+			
+			if p_data.get("is_bot", false):
+				nomi_labels[i].text = "Bot " + str(i + 1)
+			elif p_data["id"] == my_id:
+				nomi_labels[i].text = "Tu (P" + str(i + 1) + ")"
+			else:
+				nomi_labels[i].text = "P" + str(i + 1)
 		else:
-			nomi_labels[i].text = "P" + str(i + 1)
+			giocatori_nodes[i].hide()
+			nomi_labels[i].text = ""
 
 # --- COUNTDOWN ---
 func start_countdown():
@@ -68,10 +65,10 @@ func start_countdown():
 	var countdown_steps = ["3", "2", "1", "VIA!"]
 	
 	for step in countdown_steps:
-		rpc("update_countdown", step)
+		update_countdown.rpc(step)
 		await get_tree().create_timer(1.0).timeout
 	
-	rpc("start_race")
+	start_race.rpc()
 
 @rpc("authority", "call_local", "reliable")
 func update_countdown(text: String):
@@ -82,107 +79,84 @@ func start_race():
 	current_state = GameState.PLAYING
 	countdown_label.hide()
 
-# --- LOOP DI GIOCO ---
+# --- INPUT DEL GIOCATORE ---
+func _unhandled_input(event: InputEvent) -> void:
+	if current_state != GameState.PLAYING: return
+	
+	# Intercetta la barra spaziatrice e invia il comando al server
+	if event.is_action_pressed("ui_accept"):
+		receive_player_input.rpc_id(1)
+
+# --- LOGICA BOT (Solo Server) ---
 func _process(delta):
-	if current_state != GameState.PLAYING:
+	if current_state != GameState.PLAYING or not multiplayer.is_server():
 		return
 		
-	# 1. INPUT DEL GIOCATORE (Client / Host)
-	if Input.is_action_just_pressed("ui_accept"): # Barra spaziatrice
-		rpc_id(1, "receive_player_input", multiplayer.get_unique_id())
-
-	# 2. LOGICA BOT (Gestita solo dal Server)
-	if multiplayer.is_server():
-		for i in range(4):
-			if lane_assignments[i] == 0: # È un bot
-				bot_timers[i] += delta
-				var current_bot_rate = bot_base_spam_rate + randf_range(-1.0, 2.0)
-				var time_between_presses = 1.0 / current_bot_rate
-				
-				if bot_timers[i] >= time_between_presses:
-					bot_timers[i] = 0.0
-					_advance_lane(i)
+	for i in range(GlobalData.players_data.size()):
+		if GlobalData.players_data[i].get("is_bot", false):
+			bot_timers[i] += delta
+			# Aggiunge un po' di umana imprecisione ai bot
+			var current_bot_rate = bot_base_spam_rate + randf_range(-1.5, 1.5)
+			var time_between_presses = 1.0 / current_bot_rate
+			
+			if bot_timers[i] >= time_between_presses:
+				bot_timers[i] = 0.0
+				_advance_lane(i)
 
 # --- GESTIONE MOVIMENTI ---
 @rpc("any_peer", "call_local", "reliable")
-func receive_player_input(peer_id: int):
-	if not multiplayer.is_server():
+func receive_player_input():
+	if not multiplayer.is_server() or current_state != GameState.PLAYING:
 		return
 		
-	# Trova la corsia del giocatore che ha spammato spazio
-	for i in range(4):
-		if lane_assignments[i] == peer_id:
+	var sender_id = multiplayer.get_remote_sender_id()
+	
+	# Cerca in quale corsia si trova il giocatore che ha premuto il tasto
+	for i in range(GlobalData.players_data.size()):
+		if GlobalData.players_data[i]["id"] == sender_id and not GlobalData.players_data[i].get("is_bot", false):
 			_advance_lane(i)
 			break
 
 func _advance_lane(lane_index: int):
-	if current_state != GameState.PLAYING:
-		return
-		
 	progress[lane_index] += step_size
 	var new_y = start_y - progress[lane_index]
 	
-	rpc("update_position", lane_index, new_y)
+	update_position.rpc(lane_index, new_y)
 	
-	if new_y <= finish_y:
+	if new_y <= finish_y and current_state == GameState.PLAYING:
 		current_state = GameState.FINISHED 
-		var winner_id = lane_assignments[lane_index]
-		var winner_name = ""
-		if winner_id == 0:
-			winner_name = "BOT " + str(lane_index + 1)
-		else:
-			winner_name = "GIOCATORE " + str(lane_index + 1)
-		_server_declare_winner(winner_name, [lane_index])
+		_server_declare_winner(lane_index)
 
 @rpc("authority", "call_local", "unreliable")
 func update_position(lane_index: int, new_y: float):
-	giocatori_nodes[lane_index].position.y = new_y
+	if is_instance_valid(giocatori_nodes[lane_index]):
+		giocatori_nodes[lane_index].position.y = new_y
 
 # --- VITTORIA E FINE GIOCO ---
-@rpc("authority", "call_local", "reliable")
-func declare_winner(lane_index: int):
-	current_state = GameState.FINISHED
-	var winner_id = lane_assignments[lane_index]
+func _server_declare_winner(winner_index: int) -> void:
+	# Salva l'INDICE (0-3), non l'ID di rete, per non far crashare il tabellone!
+	GlobalData.minigame_winners = [winner_index]
 	
-	if winner_id == 0:
-		winner_label.text = "IL BOT HA VINTO!"
-	elif winner_id == multiplayer.get_unique_id():
-		winner_label.text = "HAI VINTO!"
-	else:
-		winner_label.text = "IL GIOCATORE " + str(lane_index + 1) + " HA VINTO!"
-		
-	winner_label.show()
-	
-	# Salva il vincitore nel GlobalData se necessario e torna al tabellone
-	if multiplayer.is_server():
-		GlobalData.minigame_winners = [winner_id]
-		await get_tree().create_timer(4.0).timeout
-		get_tree().change_scene_to_file("res://tabellone/tabellone.tscn")
-		
-		
-func _server_declare_winner(winner_name: String, winner_slots: Array) -> void:
-	client_sync_state.rpc(GameState.FINISHED)
-	GlobalData.minigame_winners = winner_slots.duplicate()
-	client_show_winner_ui.rpc(winner_name)
-	await get_tree().create_timer(3.0).timeout
+	client_show_winner_ui.rpc(winner_index)
+	await get_tree().create_timer(4.0).timeout
 	client_ritorna_al_tabellone.rpc()
-@rpc("authority", "call_local", "reliable")
-func client_sync_state(new_state: int) -> void:
-	current_state = new_state
 
 @rpc("authority", "call_local", "reliable")
-func client_show_winner_ui(winner_name: String) -> void:
-	var my_slot = -1
-	for i in range(4):
-		if lane_assignments[i] == multiplayer.get_unique_id():
-			my_slot = i
-			break
-			
-	if GlobalData.minigame_winners.has(my_slot):
+func client_show_winner_ui(winner_index: int) -> void:
+	current_state = GameState.FINISHED
+	countdown_label.hide()
+	
+	var p_data = GlobalData.players_data[winner_index]
+	var my_id = multiplayer.get_unique_id()
+	
+	if p_data["id"] == my_id and not p_data.get("is_bot", false):
 		winner_label.text = "HAI VINTO!"
+	elif p_data.get("is_bot", false):
+		winner_label.text = "IL BOT " + str(winner_index + 1) + " HA VINTO!"
 	else:
-		winner_label.text = winner_name + " HA VINTO!"
+		winner_label.text = "IL GIOCATORE " + str(winner_index + 1) + " HA VINTO!"
 		
+	winner_label.text += "\n+10 Monete!"
 	winner_label.show()
 
 @rpc("authority", "call_local", "reliable")

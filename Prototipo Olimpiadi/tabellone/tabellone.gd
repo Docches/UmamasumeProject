@@ -31,7 +31,7 @@ var current_dice_number = 1
 var move_direction = 1
 
 const TOTAL_SPACES = 100
-const MAX_TURNS = 15
+const MAX_TURNS = 10
 
 var space_links = {}
 var space_types = {}
@@ -440,8 +440,8 @@ func start_minigame_sequence(new_turn: int):
 	dice_label.text = "MINIGIOCO IN ARRIVO..."
 	await get_tree().create_timer(3.0).timeout
 	if multiplayer.is_server():
-		#change_scene_all.rpc(minigame_scenes.pick_random().resource_path)
-		change_scene_all.rpc(minigame_scenes[0].resource_path)
+		change_scene_all.rpc(minigame_scenes.pick_random().resource_path)
+		#change_scene_all.rpc(minigame_scenes[0].resource_path)
 
 @rpc("authority", "call_local", "reliable")
 func change_scene_all(path: String):

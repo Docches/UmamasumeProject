@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bq68fodfaq4tn" path="res://tabellone/tabellone.gd" id="1_6xf64"]
 [ext_resource type="PackedScene" uid="uid://bqacs5xluxjvx" path="res://scherma/Scene/game.tscn" id="2_2fsle"]
 [ext_resource type="PackedScene" uid="uid://deuobacdgrqbr" path="res://100m/corsa_100m.tscn" id="2_185ah"]
+[ext_resource type="PackedScene" uid="uid://b8x7xxyy0001" path="res://100mUma/corsa_100m.tscn" id="2_fq3et"]
 [ext_resource type="Script" uid="uid://dp2s4gsb2o7kh" path="res://tabellone/board_player.gd" id="2_kinqb"]
 [ext_resource type="PackedScene" uid="uid://be0a2keplion5" path="res://canoa/canoa.tscn" id="3_dnsta"]
 [ext_resource type="Texture2D" uid="uid://5nci2lq216sd" path="res://curling/icon.svg" id="3_kinqb"]
@@ -36,7 +37,7 @@ corner_radius_bottom_left = 12
 
 [node name="tabellone" type="Node2D" unique_id=1996816307]
 script = ExtResource("1_6xf64")
-minigame_scenes = Array[PackedScene]([ExtResource("7_dk6cw"), ExtResource("2_2fsle"), ExtResource("4_2fsle"), ExtResource("2_185ah"), ExtResource("3_dnsta"), ExtResource("5_fq3et"), ExtResource("6_y6alk"), ExtResource("8_y6cgs"), ExtResource("9_58o12")])
+minigame_scenes = Array[PackedScene]([ExtResource("2_fq3et"), ExtResource("7_dk6cw"), ExtResource("2_2fsle"), ExtResource("4_2fsle"), ExtResource("2_185ah"), ExtResource("3_dnsta"), ExtResource("5_fq3et"), ExtResource("6_y6alk"), ExtResource("8_y6cgs"), ExtResource("9_58o12"), ExtResource("2_185ah")])
 
 [node name="Background" type="Panel" parent="." unique_id=755147223]
 z_index = -1
