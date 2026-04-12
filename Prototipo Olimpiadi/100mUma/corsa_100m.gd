@@ -30,6 +30,7 @@ var local_predicted_step: int = 0
 var my_slot: int = -1
 
 func _ready():
+	randomize()
 	_fix_lobby_data()
 	
 	_setup_game()
@@ -40,7 +41,6 @@ func _ready():
 		_show_instructions_sequence()
 
 # --- RIPARAZIONE AUTOMATICA DEI DATI DELLA LOBBY ---
-# Assicura che i bot siano attivi e rinominati, anche se la Lobby non lo fa.
 func _fix_lobby_data():
 	if GlobalData.players_data.is_empty():
 		for i in range(4):
@@ -50,7 +50,6 @@ func _fix_lobby_data():
 			var connected_peers = multiplayer.get_peers()
 			for i in range(GlobalData.players_data.size()):
 				var p_id = GlobalData.players_data[i].get("id", -1)
-				# Se l'ID non è 1 (il server) e non è in multiplayer... è un Bot!
 				if p_id != 1 and not p_id in connected_peers:
 					GlobalData.players_data[i]["is_bot"] = true
 
@@ -78,23 +77,20 @@ func _setup_game():
 			if label:
 				var is_bot = p_data.get("is_bot", false)
 				
-				# Logica Assegnazione Nomi (Bot o Real)
 				if is_bot:
 					label.text = "BOT " + str(bot_count)
 					bot_count += 1
 				else:
 					var p_name = p_data.get("name", "")
-					# Fallback se il nome è vuoto o generico
 					if p_name == "" or p_name.begins_with("Giocatore"):
 						p_name = "Player " + str(i+1)
 					label.text = p_name
 				
-				# Evidenzia il giocatore locale (Usa modulate perché scavalca LabelSettings)
 				if p_data.get("id") == id and not is_bot:
 					my_slot = i
-					label.modulate = Color(1, 1, 0) # Giallo acceso
+					label.modulate = Color(1, 1, 0)
 				else:
-					label.modulate = Color(1, 1, 1) # Bianco
+					label.modulate = Color(1, 1, 1)
 
 func _reset_animations():
 	for p in giocatori_nodes:
@@ -124,6 +120,7 @@ func _start_game_sequence():
 			bot_timers[i] = _calcola_tempo_bot(0)
 
 func _process(delta: float):
+	# I bot si fermano se il gioco è finito
 	if not multiplayer.is_server() or current_state != GameState.PLAYING: return
 	
 	for i in range(4):
@@ -153,6 +150,9 @@ func _unhandled_input(event):
 			_process_qte_input(k)
 
 func _process_qte_input(key: String):
+	# FIX ANTICRASH: Se non ci sono frecce (es. hai già finito), ignora l'input
+	if current_qte_seq.is_empty(): return
+	
 	if key == current_qte_seq[local_qte_idx]:
 		local_qte_idx += 1
 		_update_qte_label(local_predicted_step)
@@ -188,7 +188,9 @@ func _generate_new_qte(step_for_length: int):
 # --- RPC E SINCRONIZZAZIONE ---
 @rpc("any_peer", "call_local", "reliable")
 func server_apply_result(success: bool):
-	if not multiplayer.is_server(): return
+	# FIX: Se il gioco è già finito, il server ignora i risultati ritardati degli altri
+	if not multiplayer.is_server() or current_state == GameState.FINISHED: return
+	
 	var id = multiplayer.get_remote_sender_id()
 	if id == 0: id = 1 
 	
@@ -269,19 +271,37 @@ func _flash_feedback(color: Color):
 	feedback_panel.color.a = 0.8
 	create_tween().tween_property(feedback_panel, "color:a", 0.0, 0.3)
 
+# --- FINE PARTITA E CAMBIO SCENA ---
 func _declare_winner(i: int):
+	# Doppia sicurezza: evitiamo che venga chiamato due volte
+	if current_state == GameState.FINISHED: return 
 	current_state = GameState.FINISHED
-	var p_data = GlobalData.players_data[i]
 	
+	GlobalData.minigame_winners = [i]
+	client_show_winner.rpc(i)
+	
+	# Il server aspetta e POI fa cambiare scena a tutti
+	await get_tree().create_timer(3.5).timeout
+	client_cambia_scena.rpc()
+
+@rpc("authority", "call_local", "reliable")
+func client_show_winner(winner_idx: int):
+	# Ferma il gioco e pulisce la UI per TUTTI i client
+	current_state = GameState.FINISHED
+	current_qte_seq.clear()
+	qte_label.text = ""
+	
+	var p_data = GlobalData.players_data[winner_idx]
 	var nome = "BOT " if p_data.get("is_bot", false) else p_data.get("name", "Giocatore")
+	
 	if p_data.get("is_bot", false):
 		var bot_count = 1
-		for j in range(i):
+		for j in range(winner_idx):
 			if GlobalData.players_data[j].get("is_bot", false): bot_count += 1
 		nome += str(bot_count)
 		
-	client_update_info.rpc("🏆 " + nome + " VINCE L'ORO! 🏆")
-	qte_label.text = ""
-	GlobalData.minigame_winners = [i]
-	await get_tree().create_timer(3.5).timeout
+	info_label.text = "🏆 " + nome + " VINCE L'ORO! 🏆"
+
+@rpc("authority", "call_local", "reliable")
+func client_cambia_scena():
 	get_tree().change_scene_to_file("res://tabellone/tabellone.tscn")
