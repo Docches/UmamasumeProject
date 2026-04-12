@@ -182,3 +182,18 @@ func server_trigger_start() -> void:
 func client_start_game(roster: Array) -> void:
 	GlobalData.players_data = roster
 	get_tree().change_scene_to_file("res://tabellone/tabellone.tscn")
+
+
+# Nello script del tuo menu principale (menu.gd)
+
+func _on_solo_button_pressed():
+	var peer = ENetMultiplayerPeer.new()
+	
+	var error = peer.create_server(8910, 4) 
+	
+	if error == OK:
+		multiplayer.multiplayer_peer = peer
+		
+		get_tree().change_scene_to_file("res://tabellone/tabellone.tscn")
+	else:
+		print("Errore nella creazione del server locale!")

@@ -37,10 +37,9 @@ var space_links = {}
 var space_types = {}
 
 func _ready() -> void:
-	# INIZIALIZZA LA CASUALITÀ REALE (Evita che escano sempre gli stessi dadi e minigiochi)
+
 	randomize()
 	
-	# 1. DEBUG / PREVENZIONE CRASH: Se GlobalData è vuoto (es. hai premuto F6 per testare la scena da sola)
 	if GlobalData.players_data.is_empty():
 		print("ATTENZIONE: GlobalData vuoto. Generazione giocatori di test in corso...")
 		for i in range(4):
@@ -372,7 +371,7 @@ func update_ui(p_index: int):
 	
 	if current_state == GameState.IDLE:
 		if current_p.get("is_bot", false): 
-			dice_label.text = "[ Il Bot sta pensando... ]"
+			dice_label.text = "[ Il Bot sta tirando... ]"
 		elif current_p["id"] == multiplayer.get_unique_id(): 
 			dice_label.text = "[ PREMI SPAZIO PER GIRARE ]"
 		else: 

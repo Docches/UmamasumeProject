@@ -186,7 +186,7 @@ func client_sync_countdown(text: String) -> void:
 
 @rpc("authority", "call_local", "reliable")
 func client_show_winner_ui(team_name: String) -> void:
-	status_label.text = "VITTORIA DEL TEAM " + team_name + "!"
+	status_label.text = "VITTORIA DEL TEAM DI " + team_name + "!"
 	countdown_label.text = ""
 
 @rpc("authority", "call_local", "reliable")
