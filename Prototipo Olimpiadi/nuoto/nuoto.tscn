@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://m72vg5dv34e5" path="res://nuoto/Swim3.png" id="5_7cgpk"]
 [ext_resource type="Texture2D" uid="uid://cq61u2ihhniaw" path="res://nuoto/Swim4.png" id="6_mv5na"]
 [ext_resource type="Texture2D" uid="uid://bo1o6nsk1m66g" path="res://piscinaGioco.png" id="6_qbm6f"]
+[ext_resource type="AudioStream" uid="uid://bd12cehha07gw" path="res://musica/ostGames.mp3" id="7_y6iiv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pabeb"]
 atlas = ExtResource("3_qbm6f")
@@ -302,3 +303,10 @@ show_behind_parent = true
 position = Vector2(572.5, 324.25)
 scale = Vector2(1.1198831, 1.1465365)
 texture = ExtResource("6_qbm6f")
+
+[node name="ost" type="AudioStreamPlayer" parent="." unique_id=1277643550]
+stream = ExtResource("7_y6iiv")
+volume_db = -18.831
+autoplay = true
+mix_target = 2
+parameters/looping = true

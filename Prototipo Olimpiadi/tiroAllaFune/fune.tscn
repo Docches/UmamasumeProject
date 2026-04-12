@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dcvwpppjylq8x"]
 
 [ext_resource type="Script" uid="uid://bwpe07tp06rcw" path="res://tiroAllaFune/fune.gd" id="1_g00yw"]
+[ext_resource type="AudioStream" uid="uid://bd12cehha07gw" path="res://musica/ostGames.mp3" id="2_hjm46"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1"]
 size = Vector2(64, 64)
@@ -152,3 +153,10 @@ theme_override_colors/font_color = Color(0.2, 1, 0.2, 1)
 theme_override_font_sizes/font_size = 28
 text = "TEAM DESTRA:"
 horizontal_alignment = 1
+
+[node name="ost" type="AudioStreamPlayer" parent="." unique_id=1337630487]
+stream = ExtResource("2_hjm46")
+volume_db = -18.831
+autoplay = true
+mix_target = 2
+parameters/looping = true

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dpne64qm7ybwp" path="res://corsaCavalli/main.gd" id="1_uu6xs"]
 [ext_resource type="PackedScene" uid="uid://nqxpio8camhq" path="res://corsaCavalli/Running.tscn" id="2_r0du0"]
+[ext_resource type="AudioStream" uid="uid://bd12cehha07gw" path="res://musica/ostGames.mp3" id="3_eio38"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_t6e8d"]
 font_size = 22
@@ -146,6 +147,13 @@ size_flags_vertical = 3
 color = Color(0, 0.9647059, 0.23137255, 1)
 
 [node name="Level" type="Node2D" parent="." unique_id=762318982]
+
+[node name="ost" type="AudioStreamPlayer" parent="." unique_id=898367403]
+stream = ExtResource("3_eio38")
+volume_db = -18.831
+autoplay = true
+mix_target = 2
+parameters/looping = true
 
 [connection signal="pressed" from="UI/BtnHorse0" to="." method="_on_horse1_pressed"]
 [connection signal="pressed" from="UI/BtnHorse1" to="." method="_on_horse4_pressed"]

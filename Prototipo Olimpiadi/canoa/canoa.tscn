@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://be0a2keplion5"]
 
 [ext_resource type="Script" uid="uid://bkxv03exkf2a3" path="res://canoa/canoa.gd" id="1_canoa"]
+[ext_resource type="AudioStream" uid="uid://bd12cehha07gw" path="res://musica/ostGames.mp3" id="2_h1b5b"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_canoe"]
 size = Vector2(24, 70)
@@ -180,3 +181,10 @@ NERO (Bomba!): -2 Punti
 
 Hai 60 SECONDI!"
 horizontal_alignment = 1
+
+[node name="ost" type="AudioStreamPlayer" parent="." unique_id=1618485033]
+stream = ExtResource("2_h1b5b")
+volume_db = -18.831
+autoplay = true
+mix_target = 2
+parameters/looping = true

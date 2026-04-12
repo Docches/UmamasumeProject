@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dtpdqd3hhamv8"]
 
 [ext_resource type="Script" uid="uid://58c22rm0vk71" path="res://triathlon/triathlon.gd" id="1_tri"]
+[ext_resource type="AudioStream" uid="uid://bd12cehha07gw" path="res://musica/ostGames.mp3" id="2_3hvp7"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_player"]
 size = Vector2(30, 30)
@@ -300,3 +301,10 @@ text = "1. NUOTO (Blu): SPAMMA SPAZIO per bracciare. Le collisioni rallentano!
 3. BICI (Grigio): FRECCIA SU/GIU per spostarti. Prendi la SCIA per caricare il TURBO (Spazio)!
 4. CORSA (Rosso): TIENI PREMUTO SPAZIO per correre. Se finisci la stamina svieni per 2 secondi!"
 horizontal_alignment = 1
+
+[node name="ost" type="AudioStreamPlayer" parent="." unique_id=1437067516]
+stream = ExtResource("2_3hvp7")
+volume_db = -18.831
+autoplay = true
+mix_target = 2
+parameters/looping = true

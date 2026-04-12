@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://uqat63oycmav" path="res://scherma/assets/Sfondo/terreno_scherma.jpg" id="2_4jv7b"]
 [ext_resource type="PackedScene" uid="uid://b1fh57ago12i5" path="res://scherma/Scene/schermitore_destro.tscn" id="3_4jv7b"]
 [ext_resource type="PackedScene" uid="uid://15clhuhkeik5" path="res://scherma/Scene/schermitore_sinistro.tscn" id="4_03iqk"]
+[ext_resource type="AudioStream" uid="uid://bd12cehha07gw" path="res://musica/ostGames.mp3" id="6_rh6e2"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_ihreq"]
 a = Vector2(0, 547)
@@ -116,3 +117,10 @@ shape = SubResource("SegmentShape2D_h8jt7")
 [node name="durataRound" type="Timer" parent="." unique_id=1332413133]
 wait_time = 45.0
 one_shot = true
+
+[node name="ost" type="AudioStreamPlayer" parent="." unique_id=95184521]
+stream = ExtResource("6_rh6e2")
+volume_db = -18.831
+autoplay = true
+mix_target = 2
+parameters/looping = true
