@@ -1,0 +1,178 @@
+[gd_scene format=3 uid="uid://dlagu4y5u5k4l"]
+
+[ext_resource type="Script" uid="uid://cxe5f0461a1hd" path="res://menu/menu.gd" id="1_j0t7f"]
+[ext_resource type="Texture2D" uid="uid://dtej4iclqq0ps" path="res://Olympic Rumble.png" id="2_g18jx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0, 0, 0, 0.85)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.15, 0.15, 0.15, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="MainMenu" type="Control" unique_id=1389509887]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j0t7f")
+
+[node name="Background" type="ColorRect" parent="." unique_id=190008756]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="OlympicRumble" type="Sprite2D" parent="." unique_id=725949581]
+position = Vector2(576, 324)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_g18jx")
+
+[node name="MainMenuUI" type="Control" parent="." unique_id=579201784]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SoloButton" type="Button" parent="MainMenuUI" unique_id=76777792]
+layout_mode = 0
+offset_left = 426.0
+offset_top = 350.0
+offset_right = 726.0
+offset_bottom = 420.0
+theme_override_font_sizes/font_size = 32
+text = "GIOCA DA SOLO (Bot)"
+
+[node name="HostButton" type="Button" parent="MainMenuUI" unique_id=1061410119]
+layout_mode = 0
+offset_left = 426.0
+offset_top = 440.0
+offset_right = 726.0
+offset_bottom = 510.0
+theme_override_font_sizes/font_size = 32
+text = "CREA LOBBY (Host)"
+
+[node name="JoinContainer" type="ColorRect" parent="MainMenuUI" unique_id=1467010157]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 530.0
+offset_right = 776.0
+offset_bottom = 620.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="IPInput" type="LineEdit" parent="MainMenuUI/JoinContainer" unique_id=1300595554]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 230.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Inserisci IP..."
+
+[node name="JoinButton" type="Button" parent="MainMenuUI/JoinContainer" unique_id=772139412]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 20.0
+offset_right = 380.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 24
+text = "UNISCITI"
+
+[node name="LobbyUI" type="Control" parent="." unique_id=721840861]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="LobbyUI" unique_id=1234492854]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="TitoloLobby" type="Label" parent="LobbyUI/Panel" unique_id=207371164]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 20.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_font_sizes/font_size = 36
+text = "SALA D'ATTESA"
+horizontal_alignment = 1
+
+[node name="PlayerList" type="RichTextLabel" parent="LobbyUI/Panel" unique_id=775638514]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -100.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+text = "[center]In attesa di giocatori...[/center]"
+
+[node name="StartButton" type="Button" parent="LobbyUI/Panel" unique_id=2130253134]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -80.0
+offset_right = 150.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "AVVIA PARTITA"
+
+[node name="BackButton" type="Button" parent="LobbyUI" unique_id=1157641167]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 180.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "← INDIETRO"
+
+[connection signal="pressed" from="MainMenuUI/SoloButton" to="." method="_on_solo_button_pressed"]
+[connection signal="pressed" from="MainMenuUI/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="MainMenuUI/JoinContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="LobbyUI/Panel/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="LobbyUI/BackButton" to="." method="_on_back_button_pressed"]

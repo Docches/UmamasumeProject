@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://chkngca3ayn3a"]
+
+[ext_resource type="Texture2D" uid="uid://phcs6bp2sgby" path="res://assets/Sprite/Sprite Test/omino_blu.png" id="1_e5qy7"]
+[ext_resource type="Texture2D" uid="uid://bb688ndv0i621" path="res://assets/Sprite/Sprite Test/omino_blu_calcio.png" id="2_rx8nr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpm5k"]
+atlas = ExtResource("1_e5qy7")
+region = Rect2(0, 0, 400, 900)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8uy5f"]
+atlas = ExtResource("2_rx8nr")
+region = Rect2(0, 0, 500, 900)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_glbhb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpm5k")
+}],
+"loop": true,
+"name": &"Fermo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8uy5f")
+}],
+"loop": true,
+"name": &"Tiro",
+"speed": 5.0
+}]
+
+[node name="Calciatore" type="CharacterBody2D" unique_id=1969041775]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=546745235]
+position = Vector2(805.5625, 515.5)
+scale = Vector2(0.27425, 0.29000005)
+sprite_frames = SubResource("SpriteFrames_glbhb")
+animation = &"Tiro"

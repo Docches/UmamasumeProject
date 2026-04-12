@@ -1,0 +1,304 @@
+[gd_scene format=3 uid="uid://dd4j402gyn5q6"]
+
+[ext_resource type="Script" uid="uid://dwhfltwewyx8t" path="res://nuoto/nuoto.gd" id="1_34r4y"]
+[ext_resource type="Texture2D" uid="uid://dyvhk2hdksjrn" path="res://nuoto/Swim.png" id="3_qbm6f"]
+[ext_resource type="Texture2D" uid="uid://bfd38awqne6ux" path="res://nuoto/Swim2.png" id="4_y6iiv"]
+[ext_resource type="Texture2D" uid="uid://m72vg5dv34e5" path="res://nuoto/Swim3.png" id="5_7cgpk"]
+[ext_resource type="Texture2D" uid="uid://cq61u2ihhniaw" path="res://nuoto/Swim4.png" id="6_mv5na"]
+[ext_resource type="Texture2D" uid="uid://bo1o6nsk1m66g" path="res://piscinaGioco.png" id="6_qbm6f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pabeb"]
+atlas = ExtResource("3_qbm6f")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_agm66"]
+atlas = ExtResource("3_qbm6f")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6a33j"]
+atlas = ExtResource("3_qbm6f")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cbhr"]
+atlas = ExtResource("3_qbm6f")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1g5h"]
+atlas = ExtResource("3_qbm6f")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlwkb"]
+atlas = ExtResource("3_qbm6f")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gslke"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pabeb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_agm66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6a33j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cbhr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1g5h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlwkb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ansvc"]
+atlas = ExtResource("4_y6iiv")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxtga"]
+atlas = ExtResource("4_y6iiv")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1lv3"]
+atlas = ExtResource("4_y6iiv")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkeel"]
+atlas = ExtResource("4_y6iiv")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67kjl"]
+atlas = ExtResource("4_y6iiv")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8guky"]
+atlas = ExtResource("4_y6iiv")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4kb8v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ansvc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxtga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1lv3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkeel")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67kjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8guky")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svgom"]
+atlas = ExtResource("5_7cgpk")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_315ly"]
+atlas = ExtResource("5_7cgpk")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjjka"]
+atlas = ExtResource("5_7cgpk")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eupa5"]
+atlas = ExtResource("5_7cgpk")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nf4b"]
+atlas = ExtResource("5_7cgpk")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tnqgd"]
+atlas = ExtResource("5_7cgpk")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ywhc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svgom")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_315ly")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjjka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eupa5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8nf4b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tnqgd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbm6f"]
+atlas = ExtResource("6_mv5na")
+region = Rect2(0, 0, 46, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6iiv"]
+atlas = ExtResource("6_mv5na")
+region = Rect2(46, 0, 46, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cgpk"]
+atlas = ExtResource("6_mv5na")
+region = Rect2(92, 0, 46, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mv5na"]
+atlas = ExtResource("6_mv5na")
+region = Rect2(138, 0, 46, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gslke"]
+atlas = ExtResource("6_mv5na")
+region = Rect2(184, 0, 46, 37)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8svkm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbm6f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6iiv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cgpk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mv5na")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gslke")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Nuoto" type="Node2D" unique_id=222633419]
+script = ExtResource("1_34r4y")
+
+[node name="PiscinaGioco" type="Sprite2D" parent="." unique_id=1380175857]
+position = Vector2(572.5, 321.25)
+scale = Vector2(1.1179338, 1.1465365)
+
+[node name="Giocatori" type="Node2D" parent="." unique_id=202359554]
+
+[node name="P0" type="AnimatedSprite2D" parent="Giocatori" unique_id=803597544]
+position = Vector2(125.99999, 76)
+scale = Vector2(2.4700522, 2.565104)
+sprite_frames = SubResource("SpriteFrames_gslke")
+frame_progress = 0.29840186
+
+[node name="P1" type="AnimatedSprite2D" parent="Giocatori" unique_id=1888938897]
+position = Vector2(135.60938, 244.23439)
+scale = Vector2(2.7662761, 2.0319004)
+sprite_frames = SubResource("SpriteFrames_4kb8v")
+frame_progress = 0.22824319
+
+[node name="P2" type="AnimatedSprite2D" parent="Giocatori" unique_id=1339437260]
+position = Vector2(125.999985, 399)
+scale = Vector2(2.247396, 2.6562498)
+sprite_frames = SubResource("SpriteFrames_3ywhc")
+frame_progress = 0.6267895
+
+[node name="P3" type="AnimatedSprite2D" parent="Giocatori" unique_id=2048943342]
+position = Vector2(128.23535, 562.8838)
+scale = Vector2(2.2071583, 2.1684434)
+sprite_frames = SubResource("SpriteFrames_8svkm")
+frame_progress = 0.49462026
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1097909519]
+
+[node name="QTE0" type="Label" parent="UI" unique_id=20113449]
+offset_left = 253.0
+offset_top = 6.0
+offset_right = 603.0
+offset_bottom = 46.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 28
+text = "Corsia 1"
+
+[node name="QTE1" type="Label" parent="UI" unique_id=1503083470]
+offset_left = 256.0
+offset_top = 179.0
+offset_right = 606.0
+offset_bottom = 219.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 28
+text = "Corsia 2"
+
+[node name="QTE2" type="Label" parent="UI" unique_id=1572543774]
+offset_left = 250.0
+offset_top = 330.0
+offset_right = 600.0
+offset_bottom = 370.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 28
+text = "Corsia 3"
+
+[node name="QTE3" type="Label" parent="UI" unique_id=1300845570]
+offset_left = 260.0
+offset_top = 508.0
+offset_right = 610.0
+offset_bottom = 548.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 28
+text = "Corsia 4"
+
+[node name="InfoLabel" type="Label" parent="UI" unique_id=391333944]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -100.0
+offset_right = 300.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 42
+text = "TESTO CENTRALE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QTE_Timer" type="Timer" parent="." unique_id=1780537751]
+
+[node name="PiscinaGioco2" type="Sprite2D" parent="." unique_id=1592981568]
+show_behind_parent = true
+position = Vector2(572.5, 324.25)
+scale = Vector2(1.1198831, 1.1465365)
+texture = ExtResource("6_qbm6f")

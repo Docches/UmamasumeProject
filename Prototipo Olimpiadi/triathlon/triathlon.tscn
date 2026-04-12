@@ -1,0 +1,302 @@
+[gd_scene format=3 uid="uid://dtpdqd3hhamv8"]
+
+[ext_resource type="Script" uid="uid://58c22rm0vk71" path="res://triathlon/triathlon.gd" id="1_tri"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_player"]
+size = Vector2(30, 30)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fill"]
+bg_color = Color(0.1, 0.8, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_turbo"]
+bg_color = Color(0.2, 0.8, 1, 1)
+
+[node name="Triathlon" type="Node2D" unique_id=630035365]
+script = ExtResource("1_tri")
+
+[node name="Zone" type="Node2D" parent="." unique_id=795873013]
+
+[node name="Acqua" type="ColorRect" parent="Zone" unique_id=58213161]
+offset_right = 380.0
+offset_bottom = 648.0
+color = Color(0.1, 0.4, 0.8, 1)
+
+[node name="Bici" type="ColorRect" parent="Zone" unique_id=937093895]
+offset_left = 380.0
+offset_right = 800.0
+offset_bottom = 648.0
+color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="Corsa" type="ColorRect" parent="Zone" unique_id=1712399980]
+offset_left = 800.0
+offset_right = 1130.0
+offset_bottom = 648.0
+color = Color(0.6, 0.2, 0.2, 1)
+
+[node name="Traguardo" type="ColorRect" parent="Zone" unique_id=1902009711]
+offset_left = 1130.0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Giocatori" type="Node2D" parent="." unique_id=699983966]
+
+[node name="P0" type="Sprite2D" parent="Giocatori" unique_id=179595893]
+modulate = Color(1, 0.2, 0.2, 1)
+position = Vector2(50, 150)
+texture = SubResource("PlaceholderTexture2D_player")
+
+[node name="Name" type="Label" parent="Giocatori/P0" unique_id=122338226]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -15.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "P1"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="Giocatori/P0" unique_id=374961390]
+offset_left = -100.0
+offset_top = 15.0
+offset_right = 100.0
+offset_bottom = 45.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="Stamina" type="ProgressBar" parent="Giocatori/P0" unique_id=1284420885]
+visible = false
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = -42.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill")
+value = 100.0
+show_percentage = false
+
+[node name="Turbo" type="ProgressBar" parent="Giocatori/P0" unique_id=1910767587]
+visible = false
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = -42.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_turbo")
+show_percentage = false
+
+[node name="P1" type="Sprite2D" parent="Giocatori" unique_id=264139648]
+modulate = Color(0.2, 1, 0.2, 1)
+position = Vector2(50, 250)
+texture = SubResource("PlaceholderTexture2D_player")
+
+[node name="Name" type="Label" parent="Giocatori/P1" unique_id=1065239952]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -15.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "P2"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="Giocatori/P1" unique_id=145035289]
+offset_left = -100.0
+offset_top = 15.0
+offset_right = 100.0
+offset_bottom = 45.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="Stamina" type="ProgressBar" parent="Giocatori/P1" unique_id=1636670452]
+visible = false
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = -42.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill")
+value = 100.0
+show_percentage = false
+
+[node name="Turbo" type="ProgressBar" parent="Giocatori/P1" unique_id=782642795]
+visible = false
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = -42.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_turbo")
+show_percentage = false
+
+[node name="P2" type="Sprite2D" parent="Giocatori" unique_id=1424187291]
+modulate = Color(1, 1, 0.2, 1)
+position = Vector2(50, 350)
+texture = SubResource("PlaceholderTexture2D_player")
+
+[node name="Name" type="Label" parent="Giocatori/P2" unique_id=1352302469]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -15.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "P3"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="Giocatori/P2" unique_id=132626080]
+offset_left = -100.0
+offset_top = 15.0
+offset_right = 100.0
+offset_bottom = 45.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="Stamina" type="ProgressBar" parent="Giocatori/P2" unique_id=970483868]
+visible = false
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = -42.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill")
+value = 100.0
+show_percentage = false
+
+[node name="Turbo" type="ProgressBar" parent="Giocatori/P2" unique_id=40328886]
+visible = false
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = -42.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_turbo")
+show_percentage = false
+
+[node name="P3" type="Sprite2D" parent="Giocatori" unique_id=1938779088]
+modulate = Color(1, 0.5, 0, 1)
+position = Vector2(50, 450)
+texture = SubResource("PlaceholderTexture2D_player")
+
+[node name="Name" type="Label" parent="Giocatori/P3" unique_id=679320577]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -15.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "P4"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="Giocatori/P3" unique_id=11946830]
+offset_left = -100.0
+offset_top = 15.0
+offset_right = 100.0
+offset_bottom = 45.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="Stamina" type="ProgressBar" parent="Giocatori/P3" unique_id=783236523]
+visible = false
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = -42.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill")
+value = 100.0
+show_percentage = false
+
+[node name="Turbo" type="ProgressBar" parent="Giocatori/P3" unique_id=658647530]
+visible = false
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+offset_bottom = -42.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_turbo")
+show_percentage = false
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1446108772]
+
+[node name="TimeLabel" type="Label" parent="UI" unique_id=693498781]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 48
+text = "0.0"
+horizontal_alignment = 1
+
+[node name="InfoLabel" type="Label" parent="UI" unique_id=1856541356]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TutorialPanel" type="ColorRect" parent="UI" unique_id=1667333351]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.85)
+
+[node name="Titolo" type="Label" parent="UI/TutorialPanel" unique_id=720470582]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 60.0
+offset_bottom = 140.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.1, 1)
+theme_override_font_sizes/font_size = 64
+text = "THE QUICK-TRI"
+horizontal_alignment = 1
+
+[node name="Istruzioni" type="Label" parent="UI/TutorialPanel" unique_id=453028322]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -140.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 22
+text = "1. NUOTO (Blu): SPAMMA SPAZIO per bracciare. Le collisioni rallentano!
+2. ZONA CAMBIO: Premi l'esatta sequenza di FRECCE per vestirti. Se sbagli, si resetta!
+3. BICI (Grigio): FRECCIA SU/GIU per spostarti. Prendi la SCIA per caricare il TURBO (Spazio)!
+4. CORSA (Rosso): TIENI PREMUTO SPAZIO per correre. Se finisci la stamina svieni per 2 secondi!"
+horizontal_alignment = 1

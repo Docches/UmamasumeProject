@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://bpwaxtab8o4pd"]
+
+[ext_resource type="Texture2D" uid="uid://cgo3wnqrsxaha" path="res://assets/Animazione pallone/lato1pallone.png" id="1_is711"]
+[ext_resource type="Texture2D" uid="uid://qhyg74d4qmbu" path="res://assets/Animazione pallone/lato2pallone.png" id="2_flsny"]
+[ext_resource type="Texture2D" uid="uid://ca3sagxt4xsiq" path="res://assets/Animazione pallone/lato3pallone.png" id="3_e5vme"]
+[ext_resource type="Texture2D" uid="uid://i5qwtbxcfkxm" path="res://assets/Animazione pallone/lato4pallone.png" id="4_4snxy"]
+[ext_resource type="Texture2D" uid="uid://cqsx4cyg4qjtj" path="res://assets/Animazione pallone/lato5pallone.png" id="5_hrj5x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vou3p"]
+atlas = ExtResource("1_is711")
+region = Rect2(0, 0, 212, 201)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6fj2"]
+atlas = ExtResource("2_flsny")
+region = Rect2(0, 0, 197, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_68o70"]
+atlas = ExtResource("1_is711")
+region = Rect2(0, 0, 212, 201)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbr6j"]
+atlas = ExtResource("3_e5vme")
+region = Rect2(0, 0, 209, 190)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvnsl"]
+atlas = ExtResource("4_4snxy")
+region = Rect2(0, 0, 212, 208)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4l4s"]
+atlas = ExtResource("5_hrj5x")
+region = Rect2(0, 0, 212, 201)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ym74d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vou3p")
+}],
+"loop": true,
+"name": &"Fermo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6fj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_68o70")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbr6j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvnsl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4l4s")
+}],
+"loop": true,
+"name": &"Tiro",
+"speed": 5.0
+}]
+
+[node name="Palla" type="CharacterBody2D" unique_id=1333272752]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1464678786]
+position = Vector2(81.75, 79)
+scale = Vector2(0.7538071, 0.7717391)
+sprite_frames = SubResource("SpriteFrames_ym74d")
+animation = &"Tiro"

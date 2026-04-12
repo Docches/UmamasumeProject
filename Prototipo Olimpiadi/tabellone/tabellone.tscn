@@ -1,0 +1,270 @@
+[gd_scene format=3 uid="uid://dbsuiaq8amu2j"]
+
+[ext_resource type="Script" uid="uid://bq68fodfaq4tn" path="res://tabellone/tabellone.gd" id="1_6xf64"]
+[ext_resource type="PackedScene" uid="uid://burycrnsm0krc" path="res://curling/game.tscn" id="2_185ah"]
+[ext_resource type="Script" uid="uid://dp2s4gsb2o7kh" path="res://tabellone/board_player.gd" id="2_kinqb"]
+[ext_resource type="Texture2D" uid="uid://5nci2lq216sd" path="res://curling/icon.svg" id="3_kinqb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BG"]
+bg_color = Color(0.15, 0.2, 0.15, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_imx2a"]
+font_size = 35
+shadow_size = 18
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mkdo4"]
+font_size = 54
+font_color = Color(1, 0.8, 0, 1)
+shadow_size = 58
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_HUD"]
+bg_color = Color(0.1, 0.1, 0.1, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="tabellone" type="Node2D" unique_id=1996816307]
+script = ExtResource("1_6xf64")
+minigame_scenes = Array[PackedScene]([ExtResource("2_185ah")])
+
+[node name="Background" type="Panel" parent="." unique_id=755147223]
+z_index = -1
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_BG")
+
+[node name="Spaces" type="Node2D" parent="." unique_id=598167491]
+
+[node name="Players#Player1" type="Node2D" parent="." unique_id=1483901248]
+script = ExtResource("2_kinqb")
+
+[node name="Players_Player1#sprite" type="Sprite2D" parent="." unique_id=1872612382]
+visible = false
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_kinqb")
+
+[node name="Players#Player2" type="Node2D" parent="." unique_id=1198177502]
+script = ExtResource("2_kinqb")
+
+[node name="Players_Player2#sprite2" type="Sprite2D" parent="." unique_id=2039882020]
+visible = false
+modulate = Color(1, 0, 1, 1)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_kinqb")
+
+[node name="Players#Player3" type="Node2D" parent="." unique_id=1163013586]
+script = ExtResource("2_kinqb")
+
+[node name="Players_Player3#sprite3" type="Sprite2D" parent="." unique_id=1977766734]
+visible = false
+modulate = Color(0.78, 0.58, 0.25, 1)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_kinqb")
+
+[node name="Players#Player4" type="Node2D" parent="." unique_id=974154461]
+script = ExtResource("2_kinqb")
+
+[node name="Players_Player4#sprite4" type="Sprite2D" parent="." unique_id=535909395]
+visible = false
+modulate = Color(0, 0.74, 0.4, 1)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_kinqb")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1886148213]
+
+[node name="TurnLabel" type="Label" parent="UI" unique_id=764828448]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 110.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_imx2a")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DiceLabel" type="Label" parent="UI" unique_id=1124189895]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -86.0
+offset_right = 200.0
+offset_bottom = 86.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_mkdo4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerHUDs" type="Control" parent="UI" unique_id=1587107045]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HUD_P0" type="Panel" parent="UI/PlayerHUDs" unique_id=1303544827]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 120.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_HUD")
+
+[node name="Name" type="Label" parent="UI/PlayerHUDs/HUD_P0" unique_id=2081979053]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 5.0
+offset_bottom = 35.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 20
+text = "P1"
+horizontal_alignment = 1
+
+[node name="Stats" type="Label" parent="UI/PlayerHUDs/HUD_P0" unique_id=692413796]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "🏅 0
+🪙 0"
+horizontal_alignment = 1
+
+[node name="HUD_P1" type="Panel" parent="UI/PlayerHUDs" unique_id=1641001003]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 120.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_HUD")
+
+[node name="Name" type="Label" parent="UI/PlayerHUDs/HUD_P1" unique_id=1253519428]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 5.0
+offset_bottom = 35.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.2, 1, 0.2, 1)
+theme_override_font_sizes/font_size = 20
+text = "P2"
+horizontal_alignment = 1
+
+[node name="Stats" type="Label" parent="UI/PlayerHUDs/HUD_P1" unique_id=1209343190]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "🏅 0
+🪙 0"
+horizontal_alignment = 1
+
+[node name="HUD_P2" type="Panel" parent="UI/PlayerHUDs" unique_id=1524444356]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -120.0
+offset_right = 200.0
+offset_bottom = -20.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_HUD")
+
+[node name="Name" type="Label" parent="UI/PlayerHUDs/HUD_P2" unique_id=1282267084]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 5.0
+offset_bottom = 35.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 0.2, 1)
+theme_override_font_sizes/font_size = 20
+text = "P3"
+horizontal_alignment = 1
+
+[node name="Stats" type="Label" parent="UI/PlayerHUDs/HUD_P2" unique_id=1837069771]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "🏅 0
+🪙 0"
+horizontal_alignment = 1
+
+[node name="HUD_P3" type="Panel" parent="UI/PlayerHUDs" unique_id=410190837]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -120.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_HUD")
+
+[node name="Name" type="Label" parent="UI/PlayerHUDs/HUD_P3" unique_id=1679497492]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 5.0
+offset_bottom = 35.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.6, 0.1, 1)
+theme_override_font_sizes/font_size = 20
+text = "P4"
+horizontal_alignment = 1
+
+[node name="Stats" type="Label" parent="UI/PlayerHUDs/HUD_P3" unique_id=62604143]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "🏅 0
+🪙 0"
+horizontal_alignment = 1

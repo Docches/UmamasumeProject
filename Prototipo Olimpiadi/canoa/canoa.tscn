@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://be0a2keplion5"]
+
+[ext_resource type="Script" uid="uid://bkxv03exkf2a3" path="res://canoa/canoa.gd" id="1_canoa"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_canoe"]
+size = Vector2(24, 70)
+
+[node name="CanoaGioco" type="Node2D" unique_id=1560172939]
+script = ExtResource("1_canoa")
+
+[node name="SfondoFiume" type="ColorRect" parent="." unique_id=1986073492]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.1, 0.5, 0.8, 1)
+
+[node name="Porte" type="Node2D" parent="." unique_id=648633152]
+
+[node name="Giocatori" type="Node2D" parent="." unique_id=1990853396]
+
+[node name="P0" type="Sprite2D" parent="Giocatori" unique_id=1032826180]
+modulate = Color(1, 0.2, 0.2, 1)
+position = Vector2(200, 500)
+texture = SubResource("PlaceholderTexture2D_canoe")
+
+[node name="NameLabel" type="Label" parent="Giocatori/P0" unique_id=544368917]
+offset_left = -50.0
+offset_top = -60.0
+offset_right = 50.0
+offset_bottom = -30.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "P1"
+horizontal_alignment = 1
+
+[node name="P1" type="Sprite2D" parent="Giocatori" unique_id=21525162]
+modulate = Color(0.2, 1, 0.2, 1)
+position = Vector2(450, 500)
+texture = SubResource("PlaceholderTexture2D_canoe")
+
+[node name="NameLabel" type="Label" parent="Giocatori/P1" unique_id=68189351]
+offset_left = -50.0
+offset_top = -60.0
+offset_right = 50.0
+offset_bottom = -30.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "P2"
+horizontal_alignment = 1
+
+[node name="P2" type="Sprite2D" parent="Giocatori" unique_id=164461089]
+modulate = Color(1, 1, 0.2, 1)
+position = Vector2(700, 500)
+texture = SubResource("PlaceholderTexture2D_canoe")
+
+[node name="NameLabel" type="Label" parent="Giocatori/P2" unique_id=3138166]
+offset_left = -50.0
+offset_top = -60.0
+offset_right = 50.0
+offset_bottom = -30.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "P3"
+horizontal_alignment = 1
+
+[node name="P3" type="Sprite2D" parent="Giocatori" unique_id=1608104187]
+modulate = Color(1, 0.5, 0, 1)
+position = Vector2(950, 500)
+texture = SubResource("PlaceholderTexture2D_canoe")
+
+[node name="NameLabel" type="Label" parent="Giocatori/P3" unique_id=1349900715]
+offset_left = -50.0
+offset_top = -60.0
+offset_right = 50.0
+offset_bottom = -30.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "P4"
+horizontal_alignment = 1
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=101279115]
+
+[node name="TimeLabel" type="Label" parent="UI" unique_id=1593310692]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 48
+text = "60.0"
+horizontal_alignment = 1
+
+[node name="InfoLabel" type="Label" parent="UI" unique_id=2021860424]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScorePanel" type="Panel" parent="UI" unique_id=297449382]
+modulate = Color(1, 1, 1, 0.8)
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -350.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Text" type="Label" parent="UI/ScorePanel" unique_id=1402801291]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "--- PUNTI ---
+P1: 0
+P2: 0
+P3: 0
+P4: 0"
+
+[node name="TutorialPanel" type="ColorRect" parent="UI" unique_id=669894756]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.85)
+
+[node name="Titolo" type="Label" parent="UI/TutorialPanel" unique_id=401380630]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 60.0
+offset_bottom = 140.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.2, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 64
+text = "KAYAKS OF CHAOS"
+horizontal_alignment = 1
+
+[node name="Istruzioni" type="Label" parent="UI/TutorialPanel" unique_id=1730050492]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -140.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 28
+text = "Pagaia (Frecce SX / DX) per non farti trascinare giù!
+
+GIALLO: +1 Punto
+VERDE: +3 Punti
+NERO (Bomba!): -2 Punti
+
+Hai 60 SECONDI!"
+horizontal_alignment = 1

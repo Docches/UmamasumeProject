@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://b3q1214wxtoh2"]
+
+[ext_resource type="Texture2D" uid="uid://c7g8o8bpmgus3" path="res://assets/Sfondo/sfondoTestRigoriCalcio.jpg" id="1_4jv7b"]
+[ext_resource type="Script" uid="uid://bvhprhbcy42iq" path="res://Scritpt/game.gd" id="1_h8jt7"]
+[ext_resource type="Texture2D" uid="uid://dfgaioovrq2bc" path="res://assets/terreno.jpg" id="2_03iqk"]
+[ext_resource type="Texture2D" uid="uid://cwyl2q3fimf1y" path="res://assets/portaTest.png" id="3_ihreq"]
+[ext_resource type="PackedScene" uid="uid://chkngca3ayn3a" path="res://Scene/calciatore.tscn" id="4_ihreq"]
+[ext_resource type="PackedScene" uid="uid://cc8r6mtpx0crx" path="res://Scene/portiere.tscn" id="5_thj8p"]
+[ext_resource type="PackedScene" uid="uid://bpwaxtab8o4pd" path="res://Scene/palla.tscn" id="6_thj8p"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_thj8p"]
+font_size = 38
+
+[sub_resource type="LabelSettings" id="LabelSettings_h8jt7"]
+font_size = 46
+
+[sub_resource type="LabelSettings" id="LabelSettings_sagxc"]
+font_size = 38
+
+[sub_resource type="LabelSettings" id="LabelSettings_8f6ah"]
+font_size = 38
+
+[node name="Game" type="Node" unique_id=1588676377]
+script = ExtResource("1_h8jt7")
+
+[node name="Sfondo" type="TextureRect" parent="." unique_id=1241683498]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4jv7b")
+
+[node name="Terreno" type="StaticBody2D" parent="Sfondo" unique_id=864399607]
+
+[node name="Sprite2D" type="Sprite2D" parent="Sfondo/Terreno" unique_id=1562153851]
+position = Vector2(577.24994, 481.00003)
+scale = Vector2(1.1554999, 0.33200002)
+texture = ExtResource("2_03iqk")
+
+[node name="Porta" type="StaticBody2D" parent="." unique_id=1767967140]
+
+[node name="Sprite2D" type="Sprite2D" parent="Porta" unique_id=1000123987]
+position = Vector2(596.06256, 229.43748)
+scale = Vector2(1.7642499, 1.51775)
+texture = ExtResource("3_ihreq")
+
+[node name="Calciatore" parent="." unique_id=1969041775 instance=ExtResource("4_ihreq")]
+
+[node name="Portiere" parent="." unique_id=1994908016 instance=ExtResource("5_thj8p")]
+position = Vector2(500, 219)
+
+[node name="Palla" parent="." unique_id=1333272752 instance=ExtResource("6_thj8p")]
+position = Vector2(588, 476)
+
+[node name="punteggioCambiGiocatori" type="CanvasLayer" parent="." unique_id=707625662]
+
+[node name="Giocatore1score" type="Label" parent="punteggioCambiGiocatori" unique_id=1161597501]
+anchors_preset = -1
+anchor_right = 0.28300002
+anchor_bottom = 0.11100001
+offset_left = 2.0
+offset_right = -0.016021729
+offset_bottom = 0.07199097
+text = "Giocatore 1 : 0"
+label_settings = SubResource("LabelSettings_thj8p")
+
+[node name="Giocatore2score" type="Label" parent="punteggioCambiGiocatori" unique_id=2004976586]
+anchors_preset = -1
+anchor_left = 0.24700001
+anchor_right = 0.528
+anchor_bottom = 0.108
+offset_left = 1.4559937
+offset_top = 1.0
+offset_right = 1.7440186
+offset_bottom = 3.0159988
+text = "Giocatore 2 : 0"
+label_settings = SubResource("LabelSettings_thj8p")
+
+[node name="messaggi" type="Label" parent="punteggioCambiGiocatori" unique_id=969243031]
+offset_top = 424.0
+offset_right = 483.0
+offset_bottom = 561.0
+label_settings = SubResource("LabelSettings_h8jt7")
+
+[node name="Giocatore3" type="Label" parent="punteggioCambiGiocatori" unique_id=1889071826]
+anchors_preset = -1
+anchor_left = 0.503
+anchor_top = -0.002
+anchor_right = 0.73200005
+anchor_bottom = 0.083000004
+offset_left = -1.4560547
+offset_top = 6.296
+offset_right = -2.264038
+offset_bottom = 6.215996
+text = "Giocatore 3 : 0"
+label_settings = SubResource("LabelSettings_sagxc")
+
+[node name="Giocatore4" type="Label" parent="punteggioCambiGiocatori" unique_id=99465050]
+anchors_preset = -1
+anchor_left = 0.75900006
+anchor_right = 0.98700005
+anchor_bottom = 0.086
+offset_left = -0.368042
+offset_top = 6.0
+offset_right = -0.024047852
+offset_bottom = 6.2719994
+text = "Giocatore 4 : 0"
+label_settings = SubResource("LabelSettings_8f6ah")
+
+[node name="TimerTiroPalla" type="Timer" parent="." unique_id=440903773]
+wait_time = 10.0
+one_shot = true
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1464804644]

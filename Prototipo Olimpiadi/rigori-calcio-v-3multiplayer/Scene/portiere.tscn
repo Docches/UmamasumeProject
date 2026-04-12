@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://cc8r6mtpx0crx"]
+
+[ext_resource type="Texture2D" uid="uid://bnbtyova64h3c" path="res://assets/Sprite/Sprite Test/omino_rosso (3).png" id="1_37t1e"]
+[ext_resource type="Texture2D" uid="uid://bl5lacc7iyo6m" path="res://assets/Sprite/Sprite Test/omino_tiro.png" id="2_yblnf"]
+[ext_resource type="Texture2D" uid="uid://c5dtb2jt8jj6f" path="res://assets/Sprite/Sprite Test/omino_para.png" id="3_ajume"]
+[ext_resource type="Texture2D" uid="uid://73yxou4l81dk" path="res://assets/Sprite/Sprite Test/omino_para_destra.png" id="4_uvd8l"]
+[ext_resource type="Texture2D" uid="uid://dqex5fikq3xre" path="res://assets/Sprite/Sprite Test/omino_para_sinistra.png" id="5_ctgk1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mp130"]
+atlas = ExtResource("1_37t1e")
+region = Rect2(0, 0, 250, 350)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opr6s"]
+atlas = ExtResource("2_yblnf")
+region = Rect2(0, 0, 300, 350)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ent2n"]
+atlas = ExtResource("3_ajume")
+region = Rect2(0, 0, 300, 350)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7rcg"]
+atlas = ExtResource("4_uvd8l")
+region = Rect2(0, 0, 300, 350)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o07jn"]
+atlas = ExtResource("5_ctgk1")
+region = Rect2(0, 0, 300, 350)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nir21"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mp130")
+}],
+"loop": true,
+"name": &"Fermo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opr6s")
+}],
+"loop": true,
+"name": &"parataCentroDestra",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ent2n")
+}],
+"loop": true,
+"name": &"parataCentroSinistra",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7rcg")
+}],
+"loop": true,
+"name": &"parataDestra",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o07jn")
+}],
+"loop": true,
+"name": &"parataSinistra",
+"speed": 5.0
+}]
+
+[node name="Portiere" type="CharacterBody2D" unique_id=1994908016]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=785339719]
+position = Vector2(105.5, 124.37501)
+scale = Vector2(0.70000005, 0.6435715)
+sprite_frames = SubResource("SpriteFrames_nir21")
+animation = &"Fermo"
