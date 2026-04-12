@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://15clhuhkeik5"]
+
+[ext_resource type="Script" uid="uid://dj62ek3s3f0wy" path="res://Script/schermitore_sinistro.gd" id="1_okl0b"]
+[ext_resource type="Texture2D" uid="uid://d048vqm3vy3hh" path="res://assets/Sprites/SchermitoreSinistro/Schermitore_attacco-removebg-preview (1).png" id="1_xml0i"]
+[ext_resource type="Texture2D" uid="uid://cnjyxdfffv3u" path="res://assets/Sprites/SchermitoreSinistro/SchermitoreAttaccoBasso-removebg-preview (1).png" id="2_okl0b"]
+[ext_resource type="Texture2D" uid="uid://bcievcftaovif" path="res://assets/Sprites/SchermitoreSinistro/Schermitore_non_in_attacco-removebg-preview (1).png" id="3_uw4es"]
+[ext_resource type="Texture2D" uid="uid://dagy7seqjtdsa" path="res://assets/Sprites/SchermitoreSinistro/camminatainavanti.png" id="4_by7p6"]
+[ext_resource type="Texture2D" uid="uid://c2mj4xfjxktbs" path="res://assets/Sprites/SchermitoreSinistro/camminataindietro+.png" id="5_r0iw7"]
+[ext_resource type="Texture2D" uid="uid://bsaskoalqg1qa" path="res://assets/Sprites/SchermitoreSinistro/SchermitoreParataAlta-removebg-preview (1).png" id="6_ay0kf"]
+[ext_resource type="Texture2D" uid="uid://cj5dpyd308fyx" path="res://assets/Sprites/SchermitoreSinistro/SchermitoreParataBassa-removebg-preview (1).png" id="7_rcu5e"]
+[ext_resource type="Texture2D" uid="uid://b7trkyqu7bgxm" path="res://assets/Sprites/SchermitoreSinistro/Schermitore_fermo-removebg-preview (1).png" id="8_xvdrk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkbd7"]
+atlas = ExtResource("1_xml0i")
+region = Rect2(0, 0, 677, 369)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7iy0p"]
+atlas = ExtResource("2_okl0b")
+region = Rect2(0, 0, 677, 369)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwb1p"]
+atlas = ExtResource("3_uw4es")
+region = Rect2(0, 0, 677, 369)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dchqr"]
+atlas = ExtResource("4_by7p6")
+region = Rect2(0, 0, 677, 369)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2bw7"]
+atlas = ExtResource("3_uw4es")
+region = Rect2(0, 0, 677, 369)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqfx7"]
+atlas = ExtResource("5_r0iw7")
+region = Rect2(0, 0, 677, 369)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ry1g"]
+atlas = ExtResource("3_uw4es")
+region = Rect2(0, 0, 677, 369)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmip4"]
+atlas = ExtResource("6_ay0kf")
+region = Rect2(0, 0, 677, 369)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7atr"]
+atlas = ExtResource("7_rcu5e")
+region = Rect2(0, 0, 677, 369)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tafef"]
+atlas = ExtResource("8_xvdrk")
+region = Rect2(0, 0, 677, 369)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2irwc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkbd7")
+}],
+"loop": true,
+"name": &"attaccoAlto",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7iy0p")
+}],
+"loop": true,
+"name": &"attaccoBasso",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwb1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dchqr")
+}],
+"loop": true,
+"name": &"camminataAvanti",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2bw7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqfx7")
+}],
+"loop": true,
+"name": &"camminataIndietro",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ry1g")
+}],
+"loop": true,
+"name": &"fermo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmip4")
+}],
+"loop": true,
+"name": &"paraAlto",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l7atr")
+}],
+"loop": true,
+"name": &"paraBasso",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tafef")
+}],
+"loop": true,
+"name": &"posizioneIniziale",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xml0i"]
+radius = 37.0
+height = 242.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_okl0b"]
+size = Vector2(321.5, 334)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uw4es"]
+size = Vector2(201, 334)
+
+[node name="SchermitoreSinistro" type="CharacterBody2D" unique_id=2075110067]
+script = ExtResource("1_okl0b")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=305179691]
+position = Vector2(354, 187)
+sprite_frames = SubResource("SpriteFrames_2irwc")
+animation = &"posizioneIniziale"
+
+[node name="Hitbox" type="CollisionShape2D" parent="." unique_id=967920957]
+position = Vector2(269, 144)
+shape = SubResource("CapsuleShape2D_xml0i")
+debug_color = Color(0.6141204, 0.3868941, 0.93966955, 0.41960785)
+
+[node name="HitRange" type="Area2D" parent="." unique_id=670220862]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitRange" unique_id=1662364539]
+position = Vector2(433.25, 188)
+shape = SubResource("RectangleShape2D_okl0b")
+debug_color = Color(0.5587563, 0.559961, 0.077832855, 0.41960785)
+
+[node name="bordo" type="Area2D" parent="." unique_id=389566519]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bordo" unique_id=1511213846]
+position = Vector2(176.5, 188)
+shape = SubResource("RectangleShape2D_uw4es")
+debug_color = Color(0, 0.5449385, 0.945339, 0.41960785)

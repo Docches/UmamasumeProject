@@ -8,7 +8,7 @@ extends Control
 # Nodo per il titolo della lobby dove mostreremo il codice
 @onready var lobby_title = $LobbyUI/Panel/TitoloLobby
 
-const MASTER_IP = "87.106.29.126"
+const MASTER_IP = "95.216.160.153"
 const MASTER_PORT = 9000
 const PORT_RANGE_START = 10001
 

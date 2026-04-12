@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://chkngca3ayn3a" path="res://rigori-calcio-v-3multiplayer/Scene/calciatore.tscn" id="4_ihreq"]
 [ext_resource type="PackedScene" uid="uid://cc8r6mtpx0crx" path="res://rigori-calcio-v-3multiplayer/Scene/portiere.tscn" id="5_thj8p"]
 [ext_resource type="PackedScene" uid="uid://bpwaxtab8o4pd" path="res://rigori-calcio-v-3multiplayer/Scene/palla.tscn" id="6_thj8p"]
+[ext_resource type="AudioStream" uid="uid://ccvm432u8pkr2" path="res://rigori-calcio-v-3multiplayer/sounds/follacalcio.mp3" id="8_ct7me"]
+[ext_resource type="AudioStream" uid="uid://fm0pd364xsqo" path="res://rigori-calcio-v-3multiplayer/sounds/tiroegoal.mp3" id="9_g2t7m"]
+[ext_resource type="AudioStream" uid="uid://bw3ok0qwhro7s" path="res://rigori-calcio-v-3multiplayer/sounds/curvarigoresegnato.mp3" id="10_t6nbr"]
+[ext_resource type="AudioStream" uid="uid://c38p1m5iidca7" path="res://rigori-calcio-v-3multiplayer/sounds/curvarigoresbagliato.mp3" id="11_rdix6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_thj8p"]
 font_size = 38
@@ -119,3 +123,15 @@ one_shot = true
 [node name="Attesa" type="Timer" parent="." unique_id=776524470]
 wait_time = 5.0
 one_shot = true
+
+[node name="AudioFolla" type="AudioStreamPlayer" parent="." unique_id=1800959949]
+stream = ExtResource("8_ct7me")
+
+[node name="AudioTiro" type="AudioStreamPlayer" parent="." unique_id=1887680741]
+stream = ExtResource("9_g2t7m")
+
+[node name="AudioGol" type="AudioStreamPlayer" parent="." unique_id=1009470039]
+stream = ExtResource("10_t6nbr")
+
+[node name="AudioSbagliato" type="AudioStreamPlayer" parent="." unique_id=570794305]
+stream = ExtResource("11_rdix6")
