@@ -5,8 +5,11 @@ extends Node2D
 @onready var spaces_node: Node2D = $Spaces
 @onready var turn_label: Label = $UI/TurnLabel
 @onready var dice_label: Label = $UI/DiceLabel
+@onready var win1: VideoStreamPlayer = $VideoStreamPlayer
+@onready var win2: VideoStreamPlayer = $VideoStreamPlayer2
+@onready var win3: VideoStreamPlayer = $VideoStreamPlayer3
+@onready var win4: VideoStreamPlayer = $VideoStreamPlayer4
 
-# Usiamo get_node_or_null per evitare crash se l'interfaccia viene modificata
 @onready var hud_nodes = [
 	get_node_or_null("UI/PlayerHUDs/HUD_P0"),
 	get_node_or_null("UI/PlayerHUDs/HUD_P1"),
@@ -24,14 +27,14 @@ enum SpaceType {
 var current_state: GameState = GameState.IDLE
 var players_node: Node2D
 var players: Array[Sprite2D] = []
-var player_current_spaces: Array[int] = [] # Salva in quale casella si trova ogni giocatore
+var player_current_spaces: Array[int] = []
 
 var active_steps_left = 0
 var current_dice_number = 1
 var move_direction = 1
 
 const TOTAL_SPACES = 100
-const MAX_TURNS = 10
+const MAX_TURNS = 15
 
 var space_links = {}
 var space_types = {}
@@ -48,10 +51,8 @@ func _ready() -> void:
 			GlobalData.player_coins.append(0)
 			GlobalData.player_medals.append(0)
 	
-	# 2. Generazione del tabellone
+
 	generate_board()
-	
-	# 3. Generazione DINAMICA dei giocatori (Risolve l'errore "Node not found")
 	players_node = Node2D.new()
 	players_node.name = "Players"
 	players_node.z_index = 10
@@ -59,26 +60,25 @@ func _ready() -> void:
 	
 	for i in range(GlobalData.players_data.size()):
 		var p_sprite = Sprite2D.new()
-		# Assicurati che questo percorso corrisponda all'icona del tuo gioco
 		p_sprite.texture = load("res://curling/icon.svg") 
 		p_sprite.scale = Vector2(0.3, 0.3)
 		
-		# Colori per distinguerli
+		
 		match i:
 			0: p_sprite.modulate = Color.WHITE
-			1: p_sprite.modulate = Color(1, 0, 1) # Fucsia
-			2: p_sprite.modulate = Color(0.78, 0.58, 0.25) # Oro/Marrone
-			3: p_sprite.modulate = Color(0, 0.74, 0.40) # Verde
+			1: p_sprite.modulate = Color(1, 0, 1) 
+			2: p_sprite.modulate = Color(0.78, 0.58, 0.25) 
+			3: p_sprite.modulate = Color(0, 0.74, 0.40)
 			
 		players_node.add_child(p_sprite)
 		players.append(p_sprite)
 		player_current_spaces.append(0)
 	
-	# 4. Ripristino stato partita
+	
 	restore_board_state()
 	update_huds()
 	
-	# 5. Logica di inizio turno (Gestita dal Server)
+	
 	if multiplayer.is_server():
 		if GlobalData.current_turn > MAX_TURNS:
 			declare_winner.rpc()
@@ -89,7 +89,7 @@ func _ready() -> void:
 		else:
 			update_ui.rpc(GlobalData.current_player_index)
 
-# --- GENERAZIONE TABELLONE ---
+
 func generate_board():
 	var cols = 10
 	var rows = 10
@@ -103,7 +103,7 @@ func generate_board():
 		
 		var row = i / cols
 		var col = i % cols
-		if row % 2 != 0: col = (cols - 1) - col # Zig-Zag
+		if row % 2 != 0: col = (cols - 1) - col 
 		var pos = Vector2(start_x + col * step_x, start_y + row * step_y)
 		
 		var marker = Marker2D.new()
@@ -172,7 +172,7 @@ func _assign_space_properties(i: int, rect: ColorRect, icon: Label):
 		space_types[i] = SpaceType.NEUTRAL
 		rect.color = Color(0.95, 0.95, 0.85) if i % 2 == 0 else Color(0.9, 0.9, 0.7)
 
-# --- INPUT E GESTIONE TURNO MULTIPLAYER ---
+
 func _process(_delta: float) -> void:
 	if current_state == GameState.DICE_ROLLING:
 		current_dice_number = randi_range(1, 6)
@@ -188,7 +188,6 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if current_state == GameState.IDLE or current_state == GameState.DICE_ROLLING:
 		var current_p = GlobalData.players_data[GlobalData.current_player_index]
-		# Permetti l'input solo se l'ID del client corrisponde a quello di chi deve giocare
 		if current_p["id"] == multiplayer.get_unique_id() and not current_p["is_bot"]:
 			if current_state == GameState.IDLE and event.is_action_pressed("ui_accept"):
 				start_dice_spin.rpc()
@@ -200,13 +199,13 @@ func start_dice_spin():
 	current_state = GameState.DICE_ROLLING
 	turn_label.text = "TIRA IL DADO!"
 
-# Solo il Server riceve questo comando e decide come si muove il giocatore
+
 @rpc("any_peer", "call_local", "reliable")
 func stop_dice_server(final_number: int):
 	if not multiplayer.is_server(): return
 	current_state = GameState.MOVING
 	active_steps_left = final_number
-	move_direction = 1 # Avanza normalmente
+	move_direction = 1 
 	
 	lock_dice_ui.rpc(active_steps_left)
 	await get_tree().create_timer(0.8).timeout
@@ -222,7 +221,7 @@ func lock_dice_ui(num: int):
 	tween.tween_property(dice_label, "scale", Vector2(1.0, 1.0), 0.1)
 	tween.tween_property(dice_label, "modulate", Color.WHITE, 0.3)
 
-# --- SISTEMA DI MOVIMENTO (SERVER-SIDE) ---
+
 func _step_player():
 	if not multiplayer.is_server(): return
 	
@@ -233,31 +232,25 @@ func _step_player():
 		_resolve_landed_space()
 		return
 		
-	# Calcola la prossima casella
 	var target_node = 0
 	if move_direction == 1:
 		target_node = (current_node + 1) % TOTAL_SPACES
-		# Controllo Medaglia Giro Completo
 		if target_node == 0:
 			GlobalData.player_medals[p_idx] += 1
 			sync_info_text.rpc("Giro completato! +1 Medaglia!")
 			update_leaderboard_data.rpc(GlobalData.player_coins, GlobalData.player_medals)
 	else:
-		# Muoversi all'indietro
 		target_node = (current_node - 1 + TOTAL_SPACES) % TOTAL_SPACES
 	
-	# Applica il passo
 	active_steps_left -= 1
 	player_current_spaces[p_idx] = target_node
 	GlobalData.player_space_indices[p_idx] = target_node
 	
 	var target_pos = spaces_node.get_child(target_node).global_position
 	
-	# Avvisa tutti i client di aggiornare la visuale
 	update_dice_visual.rpc(active_steps_left)
 	sync_player_pos.rpc(p_idx, target_pos, target_node)
 	
-	# Attendi che finisca l'animazione del salto, poi fai il prossimo passo
 	await get_tree().create_timer(0.25).timeout
 	_step_player()
 
@@ -268,7 +261,6 @@ func update_dice_visual(left: int):
 
 @rpc("authority", "call_local", "reliable")
 func sync_player_pos(p_idx: int, base_pos: Vector2, new_space_index: int):
-	# Sincronizza l'indice per sicurezza (Locale e Globale)
 	player_current_spaces[p_idx] = new_space_index
 	GlobalData.player_space_indices[p_idx] = new_space_index 
 	
@@ -283,7 +275,6 @@ func sync_player_pos(p_idx: int, base_pos: Vector2, new_space_index: int):
 	y_tween.tween_property(player_sprite, "global_position:y", final_pos.y - 25.0, 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	y_tween.tween_property(player_sprite, "global_position:y", final_pos.y, 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
-# --- RISOLUZIONE CASELLE ---
 func _resolve_landed_space():
 	current_state = GameState.EVENT_ACTIVE
 	var p_idx = GlobalData.current_player_index
@@ -303,15 +294,15 @@ func _resolve_landed_space():
 			if multiplayer.is_server():
 				active_steps_left = 4
 				move_direction = 1
-				_step_player() # Riavvia il movimento in avanti
+				_step_player() 
 		SpaceType.STEP_PENALTY:
 			sync_info_text.rpc("⏪ Malus! Indietreggi di 3!")
 			end_turn_immediately = false
 			await get_tree().create_timer(1.0).timeout
 			if multiplayer.is_server():
 				active_steps_left = 3
-				move_direction = -1 # Direzione inversa
-				_step_player() # Riavvia il movimento indietro
+				move_direction = -1 
+				_step_player() 
 		SpaceType.SHOP:
 			if GlobalData.player_coins[p_idx] >= 10:
 				GlobalData.player_coins[p_idx] -= 10
@@ -338,7 +329,6 @@ func _resolve_landed_space():
 		update_leaderboard_data.rpc(GlobalData.player_coins, GlobalData.player_medals)
 		end_turn_server()
 
-# --- FINE TURNO ---
 func end_turn_server() -> void:
 	GlobalData.current_player_index += 1
 	if GlobalData.current_player_index >= GlobalData.players_data.size():
@@ -431,7 +421,6 @@ func restore_board_state() -> void:
 
 @rpc("authority", "call_local", "reliable")
 func start_minigame_sequence(new_turn: int):
-	# Sincronizza turno e resetta l'indice giocatore prima di cambiare scena
 	GlobalData.current_turn = new_turn
 	GlobalData.current_player_index = 0
 	
@@ -441,7 +430,7 @@ func start_minigame_sequence(new_turn: int):
 	await get_tree().create_timer(3.0).timeout
 	if multiplayer.is_server():
 		change_scene_all.rpc(minigame_scenes.pick_random().resource_path)
-		#change_scene_all.rpc(minigame_scenes[0].resource_path)
+		
 
 @rpc("authority", "call_local", "reliable")
 func change_scene_all(path: String):
@@ -466,3 +455,20 @@ func declare_winner():
 	turn_label.text = "🏆 FINE PARTITA 🏆"
 	turn_label.modulate = Color(1, 0.8, 0)
 	dice_label.text = "Vincitore Assoluto:\n" + winner_name + "!"
+	await get_tree().create_timer(2.0).timeout
+	turn_label.visible = false
+	dice_label.visible = false
+	if winner_idx == 0:
+		win1.play()
+		await win1.finished
+	elif winner_idx == 1:
+		win2.play()
+		await win2.finished
+	elif winner_idx == 2:
+		win3.play()
+		await win3.finished
+	else:
+		win4.play()
+		await win4.finished
+	
+	get_tree().change_scene_to_file("res://menu/menu.tscn")

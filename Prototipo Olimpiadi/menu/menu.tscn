@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cxe5f0461a1hd" path="res://menu/menu.gd" id="1_j0t7f"]
 [ext_resource type="Texture2D" uid="uid://dtej4iclqq0ps" path="res://Olympic Rumble.png" id="2_g18jx"]
+[ext_resource type="AudioStream" uid="uid://debc0ok6fptjq" path="res://menu/sound/ost.wav" id="3_6nwqt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0, 0, 0, 0.85)
@@ -170,6 +171,12 @@ offset_bottom = 70.0
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
 text = "← INDIETRO"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=763684479]
+stream = ExtResource("3_6nwqt")
+volume_db = 1.944
+autoplay = true
+panning_strength = 0.0
 
 [connection signal="pressed" from="MainMenuUI/SoloButton" to="." method="_on_solo_button_pressed"]
 [connection signal="pressed" from="MainMenuUI/HostButton" to="." method="_on_host_button_pressed"]

@@ -13,6 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://b3q1214wxtoh2" path="res://rigori-calcio-v-3multiplayer/Scene/game.tscn" id="7_dk6cw"]
 [ext_resource type="PackedScene" uid="uid://dcvwpppjylq8x" path="res://tiroAllaFune/fune.tscn" id="8_y6cgs"]
 [ext_resource type="PackedScene" uid="uid://dtpdqd3hhamv8" path="res://triathlon/triathlon.tscn" id="9_58o12"]
+[ext_resource type="VideoStream" uid="uid://1u8vxpvsqkyj" path="res://tabellone/umas/Congratulazioni_Giocatore_1.ogv" id="14_58o12"]
+[ext_resource type="VideoStream" uid="uid://b46nw4saconce" path="res://tabellone/umas/Congratulazioni_Giocatore_2.ogv" id="15_fhjsv"]
+[ext_resource type="VideoStream" uid="uid://ddq63kejnisy1" path="res://tabellone/umas/Congratulazioni_Giocatore_3.ogv" id="16_7kv8j"]
+[ext_resource type="VideoStream" uid="uid://ble2bc8ue4uh8" path="res://tabellone/umas/Congratulazioni_Giocatore_4.ogv" id="17_bhepl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BG"]
 bg_color = Color(0.15, 0.2, 0.15, 1)
@@ -277,3 +281,34 @@ theme_override_font_sizes/font_size = 18
 text = "🏅 0
 🪙 0"
 horizontal_alignment = 1
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1622990433]
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 1924.0
+offset_bottom = 1082.0
+scale = Vector2(0.6, 0.6)
+stream = ExtResource("14_58o12")
+
+[node name="VideoStreamPlayer2" type="VideoStreamPlayer" parent="." unique_id=1872025718]
+offset_left = 1.0
+offset_top = -3.0
+offset_right = 1921.0
+offset_bottom = 1077.0
+scale = Vector2(0.6, 0.6)
+stream = ExtResource("15_fhjsv")
+
+[node name="VideoStreamPlayer3" type="VideoStreamPlayer" parent="." unique_id=1155487844]
+offset_left = 3.0
+offset_right = 1923.0
+offset_bottom = 1080.0
+scale = Vector2(0.6, 0.6)
+stream = ExtResource("16_7kv8j")
+
+[node name="VideoStreamPlayer4" type="VideoStreamPlayer" parent="." unique_id=292272209]
+offset_left = 1.0
+offset_top = 3.0
+offset_right = 1921.0
+offset_bottom = 1083.0
+scale = Vector2(0.6, 0.6)
+stream = ExtResource("17_bhepl")
