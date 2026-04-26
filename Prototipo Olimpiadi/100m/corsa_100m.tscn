@@ -1,9 +1,167 @@
 [gd_scene format=3 uid="uid://deuobacdgrqbr"]
 
 [ext_resource type="Script" uid="uid://bssatx2qq2axj" path="res://100m/corsa_100m.gd" id="1_qhjxn"]
+[ext_resource type="Texture2D" uid="uid://d1wqt7maqxa3j" path="res://100m/agnes-tachyon/agtc701_00.png.png" id="2_e4tt0"]
 [ext_resource type="AudioStream" uid="uid://bd12cehha07gw" path="res://musica/ostGames.mp3" id="2_gujwo"]
+[ext_resource type="Texture2D" uid="uid://ianmi3jadhdp" path="res://100m/agnes-tachyon/agtc701_01.png.png" id="3_q82ju"]
+[ext_resource type="Texture2D" uid="uid://mxbkw7q7iuwq" path="res://100m/agnes-tachyon/agtc701_02.png.png" id="4_cucjh"]
+[ext_resource type="Texture2D" uid="uid://062v6524x2xd" path="res://100m/agnes-tachyon/agtc701_03.png.png" id="5_eh3gp"]
+[ext_resource type="Texture2D" uid="uid://ciybgane11pfv" path="res://100m/agnes-tachyon/agtc701_04.png.png" id="6_skf2x"]
+[ext_resource type="Texture2D" uid="uid://bocuq1kgx6i68" path="res://100m/agnes-tachyon/agtc701_05.png.png" id="7_1u55b"]
+[ext_resource type="Texture2D" uid="uid://cet61ue1ybend" path="res://100m/agnes-tachyon/agtc701_06.png.png" id="8_3lcd5"]
+[ext_resource type="Texture2D" uid="uid://dim2d0ptykdlh" path="res://100m/agnes-tachyon/agtc701_07.png.png" id="9_5olbh"]
+[ext_resource type="Texture2D" uid="uid://d1256daal2g3m" path="res://100m/gold-ship/gosp701_00.png.png" id="10_7olc4"]
+[ext_resource type="Texture2D" uid="uid://bu4pb41sbx22x" path="res://100m/gold-ship/gosp701_01.png.png" id="11_x23c1"]
+[ext_resource type="Texture2D" uid="uid://dswnrwiwdc3qp" path="res://100m/gold-ship/gosp701_02.png.png" id="12_5kdl1"]
+[ext_resource type="Texture2D" uid="uid://c2uiofy5ydwjy" path="res://100m/gold-ship/gosp701_03.png.png" id="13_g7k2a"]
+[ext_resource type="Texture2D" uid="uid://csj61yrflnqb4" path="res://100m/gold-ship/gosp701_04.png.png" id="14_siu18"]
+[ext_resource type="Texture2D" uid="uid://ofbxp5qk882e" path="res://100m/gold-ship/gosp701_05.png.png" id="15_wek7w"]
+[ext_resource type="Texture2D" uid="uid://cnpjkpe2tx85v" path="res://100m/gold-ship/gosp701_06.png.png" id="16_tgtpb"]
+[ext_resource type="Texture2D" uid="uid://c7sh4tg01ns1o" path="res://100m/gold-ship/gosp701_07.png.png" id="17_sthaw"]
+[ext_resource type="Texture2D" uid="uid://cdr44uev5pw4c" path="res://100m/jungle-pocket/jupc701_00.png.png" id="18_d1vvl"]
+[ext_resource type="Texture2D" uid="uid://cud70u7hhljb1" path="res://100m/jungle-pocket/jupc701_01.png.png" id="19_wt8dq"]
+[ext_resource type="Texture2D" uid="uid://dadudy8asye2y" path="res://100m/jungle-pocket/jupc701_02.png.png" id="20_pdvg8"]
+[ext_resource type="Texture2D" uid="uid://mvpovnjdo005" path="res://100m/jungle-pocket/jupc701_03.png.png" id="21_tralf"]
+[ext_resource type="Texture2D" uid="uid://blj3q0dv5x1t7" path="res://100m/jungle-pocket/jupc701_04.png.png" id="22_0ygl3"]
+[ext_resource type="Texture2D" uid="uid://cqwt0d2gehwn6" path="res://100m/jungle-pocket/jupc701_05.png.png" id="23_n0e1y"]
+[ext_resource type="Texture2D" uid="uid://cxnmttdwan54g" path="res://100m/jungle-pocket/jupc701_06.png.png" id="24_s3in3"]
+[ext_resource type="Texture2D" uid="uid://befghvvdgegxc" path="res://100m/jungle-pocket/jupc701_07.png.png" id="25_xokc5"]
+[ext_resource type="Texture2D" uid="uid://cf6r50s646jtm" path="res://100m/tokai-teio/toti701_00.png.png" id="26_4sjqe"]
+[ext_resource type="Texture2D" uid="uid://bxy3ju22r2g8h" path="res://100m/tokai-teio/toti701_01.png.png" id="27_dxbdn"]
+[ext_resource type="Texture2D" uid="uid://d2qrq8sxmx4hr" path="res://100m/tokai-teio/toti701_02.png.png" id="28_3ah0m"]
+[ext_resource type="Texture2D" uid="uid://mc1qwgwml4x" path="res://100m/tokai-teio/toti701_03.png.png" id="29_fvhok"]
+[ext_resource type="Texture2D" uid="uid://bl0cuhw64l5vs" path="res://100m/tokai-teio/toti701_04.png.png" id="30_cci7m"]
+[ext_resource type="Texture2D" uid="uid://b11opug160y2t" path="res://100m/tokai-teio/toti701_05.png.png" id="31_lx8x6"]
+[ext_resource type="Texture2D" uid="uid://cd7kgp84d3ygj" path="res://100m/tokai-teio/toti701_06.png.png" id="32_kicoi"]
+[ext_resource type="Texture2D" uid="uid://c40crswbcer80" path="res://100m/tokai-teio/toti701_07.png.png" id="33_dhgfq"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_t5dag"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_yjt5c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_e4tt0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_q82ju")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_cucjh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_eh3gp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_skf2x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1u55b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_3lcd5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_5olbh")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wewi2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_7olc4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_x23c1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_5kdl1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_g7k2a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_siu18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_wek7w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_tgtpb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_sthaw")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_smj4j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_d1vvl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_wt8dq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_pdvg8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_tralf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_0ygl3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_n0e1y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_s3in3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_xokc5")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uhn4k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_4sjqe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_dxbdn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_3ah0m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_fvhok")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_cci7m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_lx8x6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_kicoi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_dhgfq")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
+}]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qhjxn"]
 font_size = 99
@@ -34,25 +192,54 @@ color = Color(0.49119222, 0.7837764, 0.31326997, 1)
 
 [node name="Lanes" type="Node2D" parent="." unique_id=2001466090]
 
-[node name="P0" type="Sprite2D" parent="Lanes" unique_id=1905614629]
-position = Vector2(144, 587)
-scale = Vector2(70, 70)
-texture = SubResource("CanvasTexture_t5dag")
+[node name="P0" type="AnimatedSprite2D" parent="Lanes" unique_id=702583125]
+position = Vector2(136, 550)
+scale = Vector2(3, 2.955)
+sprite_frames = SubResource("SpriteFrames_yjt5c")
+animation = &"run"
+frame_progress = 0.18590617
 
-[node name="P1" type="Sprite2D" parent="Lanes" unique_id=1301691224]
-position = Vector2(437, 590)
-scale = Vector2(70, 70)
-texture = SubResource("CanvasTexture_t5dag")
+[node name="NameLabel" type="Label" parent="Lanes/P0" unique_id=505349838]
+offset_left = -17.333334
+offset_top = -30.795263
+offset_right = 22.666666
+offset_bottom = -7.7952633
 
-[node name="P2" type="Sprite2D" parent="Lanes" unique_id=1858691615]
-position = Vector2(731, 590)
-scale = Vector2(70, 70)
-texture = SubResource("CanvasTexture_t5dag")
+[node name="P1" type="AnimatedSprite2D" parent="Lanes" unique_id=1513475662]
+position = Vector2(437, 550)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_wewi2")
+animation = &"run"
 
-[node name="P3" type="Sprite2D" parent="Lanes" unique_id=1030584898]
-position = Vector2(1016, 592)
-scale = Vector2(70, 70)
-texture = SubResource("CanvasTexture_t5dag")
+[node name="NameLabel" type="Label" parent="Lanes/P1" unique_id=213782017]
+offset_left = -18.333334
+offset_top = -29.333334
+offset_right = 21.666666
+offset_bottom = -6.333334
+
+[node name="P2" type="AnimatedSprite2D" parent="Lanes" unique_id=2092139836]
+position = Vector2(727, 550)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_smj4j")
+animation = &"run"
+
+[node name="NameLabel" type="Label" parent="Lanes/P2" unique_id=1127139792]
+offset_left = -19.0
+offset_top = -26.333334
+offset_right = 21.0
+offset_bottom = -3.333334
+
+[node name="P3" type="AnimatedSprite2D" parent="Lanes" unique_id=1225128648]
+position = Vector2(1019, 550)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_uhn4k")
+animation = &"run"
+
+[node name="NameLabel" type="Label" parent="Lanes/P3" unique_id=1707366127]
+offset_left = -20.333334
+offset_top = -26.333334
+offset_right = 19.666666
+offset_bottom = -3.333334
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=424372123]
 

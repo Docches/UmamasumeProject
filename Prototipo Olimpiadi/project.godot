@@ -19,6 +19,11 @@ config/icon="res://menu/icon.svg"
 
 GlobalData="*uid://c7fc6l3fakkdq"
 
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
+
 [input]
 
 action={

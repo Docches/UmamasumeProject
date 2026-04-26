@@ -29,7 +29,7 @@ func _ready():
 		peer.create_server(12345, 4)
 		multiplayer.multiplayer_peer = peer
 		for i in range(4):
-			GlobalData.players_data.append({"id": i+1, "is_bot": i > 0})
+			GlobalData.players_data.append({"id": 1 if i==0 else i+100, "is_bot": i > 0, "name": "Tester" if i==0 else "BOT"})
 	
 	if multiplayer.is_server():
 		_setup_game_clients.rpc()
@@ -49,15 +49,25 @@ func _setup_game_clients():
 			var p_data = GlobalData.players_data[i]
 			giocatori_nodes[i].show()
 			
-			if p_data.get("is_bot", false):
-				nomi_labels[i].text = "Bot " + str(i + 1)
-			elif p_data["id"] == my_id:
-				nomi_labels[i].text = "Tu (P" + str(i + 1) + ")"
-			else:
-				nomi_labels[i].text = "P" + str(i + 1)
+			# --- INTEGRAZIONE NICKNAME UNIVERSALE ---
+			if nomi_labels[i]:
+				nomi_labels[i].text = p_data.get("name", "Giocatore " + str(i+1))
+				
+				if p_data.get("is_bot", false): 
+					if not nomi_labels[i].text.begins_with("BOT"):
+						nomi_labels[i].text += " (BOT)"
+				
+				if p_data.get("id") == my_id and not p_data.get("is_bot", false):
+					nomi_labels[i].modulate = Color(1, 1, 0) # Giallo
+				else:
+					nomi_labels[i].modulate = Color(1, 1, 1) # Bianco per gli altri
 		else:
 			giocatori_nodes[i].hide()
-			nomi_labels[i].text = ""
+			if nomi_labels[i]:
+				nomi_labels[i].text = ""
+
+	# Ferma tutti all'avvio
+	client_sync_animation("idle")
 
 # --- COUNTDOWN ---
 func start_countdown():
@@ -78,6 +88,7 @@ func update_countdown(text: String):
 func start_race():
 	current_state = GameState.PLAYING
 	countdown_label.hide()
+	client_sync_animation("run") # Avvia l'animazione di corsa per tutti
 
 # --- INPUT DEL GIOCATORE ---
 func _unhandled_input(event: InputEvent) -> void:
@@ -95,7 +106,6 @@ func _process(delta):
 	for i in range(GlobalData.players_data.size()):
 		if GlobalData.players_data[i].get("is_bot", false):
 			bot_timers[i] += delta
-			# Aggiunge un po' di umana imprecisione ai bot
 			var current_bot_rate = bot_base_spam_rate + randf_range(-1.5, 1.5)
 			var time_between_presses = 1.0 / current_bot_rate
 			
@@ -103,7 +113,7 @@ func _process(delta):
 				bot_timers[i] = 0.0
 				_advance_lane(i)
 
-# --- GESTIONE MOVIMENTI ---
+# --- GESTIONE MOVIMENTI E ANIMAZIONI ---
 @rpc("any_peer", "call_local", "reliable")
 func receive_player_input():
 	if not multiplayer.is_server() or current_state != GameState.PLAYING:
@@ -111,7 +121,6 @@ func receive_player_input():
 		
 	var sender_id = multiplayer.get_remote_sender_id()
 	
-	# Cerca in quale corsia si trova il giocatore che ha premuto il tasto
 	for i in range(GlobalData.players_data.size()):
 		if GlobalData.players_data[i]["id"] == sender_id and not GlobalData.players_data[i].get("is_bot", false):
 			_advance_lane(i)
@@ -132,9 +141,20 @@ func update_position(lane_index: int, new_y: float):
 	if is_instance_valid(giocatori_nodes[lane_index]):
 		giocatori_nodes[lane_index].position.y = new_y
 
+# Sincronizza l'animazione corrente per tutti i client
+@rpc("authority", "call_local", "reliable")
+func client_sync_animation(anim_name: String):
+	for i in range(4):
+		if is_instance_valid(giocatori_nodes[i]) and giocatori_nodes[i].visible:
+			if giocatori_nodes[i].sprite_frames.has_animation(anim_name):
+				giocatori_nodes[i].play(anim_name)
+			elif anim_name == "idle":
+				giocatori_nodes[i].stop() # Se non c'è "idle", semplicemente fermiamo l'animazione
+			else:
+				giocatori_nodes[i].play() # Se manca "run", prova a fare play sull'animazione di default
+
 # --- VITTORIA E FINE GIOCO ---
 func _server_declare_winner(winner_index: int) -> void:
-	# Salva l'INDICE (0-3), non l'ID di rete, per non far crashare il tabellone!
 	GlobalData.minigame_winners = [winner_index]
 	
 	client_show_winner_ui.rpc(winner_index)
@@ -145,16 +165,19 @@ func _server_declare_winner(winner_index: int) -> void:
 func client_show_winner_ui(winner_index: int) -> void:
 	current_state = GameState.FINISHED
 	countdown_label.hide()
+	client_sync_animation("idle") # Ferma i personaggi
 	
 	var p_data = GlobalData.players_data[winner_index]
 	var my_id = multiplayer.get_unique_id()
 	
+	var nome_vincitore = p_data.get("name", "Giocatore")
+	if p_data.get("is_bot", false) and not nome_vincitore.begins_with("BOT"):
+		nome_vincitore += " (BOT)"
+	
 	if p_data["id"] == my_id and not p_data.get("is_bot", false):
 		winner_label.text = "HAI VINTO!"
-	elif p_data.get("is_bot", false):
-		winner_label.text = "IL BOT " + str(winner_index + 1) + " HA VINTO!"
 	else:
-		winner_label.text = "IL GIOCATORE " + str(winner_index + 1) + " HA VINTO!"
+		winner_label.text = "🏆 " + nome_vincitore + " HA VINTO! 🏆"
 		
 	winner_label.text += "\n+10 Monete!"
 	winner_label.show()

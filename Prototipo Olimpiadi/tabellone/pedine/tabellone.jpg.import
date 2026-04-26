@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ban2s0c6882ki"
-path="res://.godot/imported/tabellone.jpg-9ccb6eac9b4c4f18092d5e70ed436fe3.ctex"
+path="res://.godot/imported/tabellone.jpg-b16193bc28b5a38fb9809f8744d48365.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tabellone/art/tabellone.jpg"
-dest_files=["res://.godot/imported/tabellone.jpg-9ccb6eac9b4c4f18092d5e70ed436fe3.ctex"]
+source_file="res://tabellone/pedine/tabellone.jpg"
+dest_files=["res://.godot/imported/tabellone.jpg-b16193bc28b5a38fb9809f8744d48365.ctex"]
 
 [params]
 

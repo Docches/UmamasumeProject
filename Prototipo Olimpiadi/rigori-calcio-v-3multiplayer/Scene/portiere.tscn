@@ -1,36 +1,34 @@
 [gd_scene format=3 uid="uid://cc8r6mtpx0crx"]
 
-[ext_resource type="Texture2D" uid="uid://bnbtyova64h3c" path="res://assets/Sprite/Sprite Test/omino_rosso (3).png" id="1_37t1e"]
-[ext_resource type="Texture2D" uid="uid://bl5lacc7iyo6m" path="res://assets/Sprite/Sprite Test/omino_tiro.png" id="2_yblnf"]
-[ext_resource type="Texture2D" uid="uid://c5dtb2jt8jj6f" path="res://assets/Sprite/Sprite Test/omino_para.png" id="3_ajume"]
-[ext_resource type="Texture2D" uid="uid://73yxou4l81dk" path="res://assets/Sprite/Sprite Test/omino_para_destra.png" id="4_uvd8l"]
-[ext_resource type="Texture2D" uid="uid://dqex5fikq3xre" path="res://assets/Sprite/Sprite Test/omino_para_sinistra.png" id="5_ctgk1"]
+[ext_resource type="Texture2D" uid="uid://bnbtyova64h3c" path="res://rigori-calcio-v-3multiplayer/assets/Sprite/Sprite Test/omino_rosso (3).png" id="1_37t1e"]
+[ext_resource type="Texture2D" uid="uid://c5dtb2jt8jj6f" path="res://rigori-calcio-v-3multiplayer/assets/Sprite/Sprite Test/omino_para.png" id="3_ajume"]
+[ext_resource type="Texture2D" uid="uid://73yxou4l81dk" path="res://rigori-calcio-v-3multiplayer/assets/Sprite/Sprite Test/omino_para_destra.png" id="4_uvd8l"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mp130"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vj2bt"]
 atlas = ExtResource("1_37t1e")
-region = Rect2(0, 0, 250, 350)
+region = Rect2(0, 0, 300, 500)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_opr6s"]
-atlas = ExtResource("2_yblnf")
-region = Rect2(0, 0, 300, 350)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ent2n"]
-atlas = ExtResource("3_ajume")
-region = Rect2(0, 0, 300, 350)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y7rcg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc35l"]
 atlas = ExtResource("4_uvd8l")
-region = Rect2(0, 0, 300, 350)
+region = Rect2(0, 0, 600, 800)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o07jn"]
-atlas = ExtResource("5_ctgk1")
-region = Rect2(0, 0, 300, 350)
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmsmn"]
+atlas = ExtResource("3_ajume")
+region = Rect2(0, 0, 600, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uidyc"]
+atlas = ExtResource("4_uvd8l")
+region = Rect2(0, 0, 600, 800)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0ktm"]
+atlas = ExtResource("3_ajume")
+region = Rect2(0, 0, 600, 800)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nir21"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mp130")
+"texture": SubResource("AtlasTexture_vj2bt")
 }],
 "loop": true,
 "name": &"Fermo",
@@ -38,7 +36,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_opr6s")
+"texture": SubResource("AtlasTexture_oc35l")
 }],
 "loop": true,
 "name": &"parataCentroDestra",
@@ -46,7 +44,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ent2n")
+"texture": SubResource("AtlasTexture_gmsmn")
 }],
 "loop": true,
 "name": &"parataCentroSinistra",
@@ -54,7 +52,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y7rcg")
+"texture": SubResource("AtlasTexture_uidyc")
 }],
 "loop": true,
 "name": &"parataDestra",
@@ -62,7 +60,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_o07jn")
+"texture": SubResource("AtlasTexture_r0ktm")
 }],
 "loop": true,
 "name": &"parataSinistra",

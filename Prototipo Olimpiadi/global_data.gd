@@ -3,6 +3,7 @@ extends Node
 # --- DATI CONDIVISI MULTIPLAYER ---
 var players_data: Array = []
 var minigame_winners: Array = []
+var local_player_name: String = "Giocatore" # <-- AGGIUNTO PER IL NICKNAME LOCALE
 
 # --- DATI TABELLONE ---
 var player_space_indices: Array = [0, 0, 0, 0]
@@ -25,10 +26,51 @@ func _ready() -> void:
 	if multiplayer:
 		multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 
+# ==========================================
+# --- SISTEMA REGISTRAZIONE E NICKNAME ---
+# ==========================================
+
+# Il client chiama questa funzione sul Server appena si connette
+@rpc("any_peer", "call_local", "reliable")
+func server_register_player(id: int, p_name: String):
+	if not multiplayer.is_server(): return
+	
+	# Controlla se il giocatore esiste già (evita duplicati)
+	var exists = false
+	for p in players_data:
+		if p["id"] == id:
+			p["name"] = p_name # Aggiorna il nome se ha cambiato idea
+			exists = true
+			break
+			
+	# Se è un giocatore nuovo, lo aggiunge
+	if not exists:
+		players_data.append({"id": id, "name": p_name, "is_bot": false})
+		
+	# Il server avvisa tutti i client della nuova lista aggiornata
+	client_sync_players.rpc(players_data)
+
+# Il Server aggiorna le memorie di tutti i client
+@rpc("authority", "call_local", "reliable")
+func client_sync_players(nuova_lista: Array):
+	players_data = nuova_lista
+
+# ==========================================
+# --- GESTIONE SERVER E DISCONNESSIONI ---
+# ==========================================
+
 func _on_peer_disconnected(id: int) -> void:
 	# 1. Questa logica deve essere eseguita SOLO dal server
 	if not multiplayer.is_server(): 
 		return
+		
+	# --- PULIZIA DATI ---
+	# Rimuove il giocatore che è uscito dalla memoria e avvisa gli altri
+	for i in range(players_data.size() - 1, -1, -1):
+		if players_data[i]["id"] == id:
+			players_data.remove_at(i)
+			break
+	client_sync_players.rpc(players_data)
 		
 	var args = OS.get_cmdline_user_args()
 	

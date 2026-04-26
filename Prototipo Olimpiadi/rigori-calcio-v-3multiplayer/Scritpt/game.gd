@@ -56,13 +56,27 @@ func _ready() -> void:
 		peer.create_server(12345, 4)
 		multiplayer.multiplayer_peer = peer
 		for i in range(4):
-			GlobalData.players_data.append({"id": i+1, "is_bot": i > 0})
+			GlobalData.players_data.append({"id": 1 if i==0 else i+100, "is_bot": i>0, "name": "Tester" if i==0 else "BOT"})
 
 	_aggiorna_ui()
 
 	if multiplayer.is_server():
 		await get_tree().create_timer(1.0).timeout
 		_inizia_turno_server()
+
+# --- INTEGRAZIONE NICKNAME UNIVERSALE ---
+func _get_player_name(idx: int) -> String:
+	if idx < 0 or idx >= GlobalData.players_data.size(): return "???"
+	var p_data = GlobalData.players_data[idx]
+	var nome = p_data.get("name", "Giocatore")
+	
+	if p_data.get("is_bot", false) and not nome.begins_with("BOT"):
+		var bot_count = 1
+		for j in range(idx):
+			if GlobalData.players_data[j].get("is_bot", false): bot_count += 1
+		nome = "BOT " + str(bot_count)
+		
+	return nome
 
 # --- LOGICA DI FLUSSO SERVER ---
 func _inizia_turno_server() -> void:
@@ -98,7 +112,10 @@ func _sync_inizio_turno(turno: int, idx_portiere: int, idx_calciatore: int, calc
 	_reset_animazioni()
 	_aggiorna_ui()
 	fase = Fase.MESSAGGIO
-	messaggi.text = "=== TURNO %d / %d ===\nP%d in Porta\nP%d tira per primo" % [turno + 1, MAX_TURNI, idx_portiere + 1, idx_calciatore + 1]
+	
+	var calc_name = _get_player_name(idx_calciatore)
+	var port_name = _get_player_name(idx_portiere)
+	messaggi.text = "=== TURNO %d / %d ===\n%s in Porta\n%s tira per primo" % [turno + 1, MAX_TURNI, port_name, calc_name]
 
 @rpc("authority", "call_local", "reliable")
 func _sync_inizia_tiro(idx_calciatore: int, idx_portiere: int) -> void:
@@ -111,13 +128,15 @@ func _sync_inizia_tiro(idx_calciatore: int, idx_portiere: int) -> void:
 	_reset_animazioni()
 	
 	var my_id = multiplayer.get_unique_id()
+	var calc_name = _get_player_name(idx_calciatore)
+	var port_name = _get_player_name(idx_portiere)
 	
 	if GlobalData.players_data[idx_calciatore]["id"] == my_id and not GlobalData.players_data[idx_calciatore].get("is_bot", false):
 		messaggi.text = "[SEI IL CALCIATORE]\nUsa A, S, D, F per tirare!"
 	elif GlobalData.players_data[idx_portiere]["id"] == my_id and not GlobalData.players_data[idx_portiere].get("is_bot", false):
 		messaggi.text = "[SEI IL PORTIERE]\nUsa A, S, D, F per parare!"
 	else:
-		messaggi.text = "P%d Tira | P%d Para\nIn attesa..." % [idx_calciatore + 1, idx_portiere + 1]
+		messaggi.text = "%s Tira | %s Para\nIn attesa..." % [calc_name, port_name]
 
 	if multiplayer.is_server():
 		bot_timer = randf_range(1.0, 3.0) 
@@ -220,9 +239,8 @@ func _sync_risultato(sc: int, sp: int, idx_calc: int, idx_port: int, nuovi_punte
 	scelta_calciatore = sc
 	scelta_portiere   = sp
 
-	# GESTIONE AUDIO E ANIMAZIONI
 	if sc != 0:
-		if audio_tiro: audio_tiro.play() # Suono del calcio alla palla
+		if audio_tiro: audio_tiro.play()
 		calciatore_node.get_node("AnimatedSprite2D").play("Tiro")
 		palla_node.get_node("AnimatedSprite2D").play("Tiro")
 		create_tween().tween_property(palla_node, "position", POSIZIONI_PORTA[sc], 0.8)
@@ -230,21 +248,23 @@ func _sync_risultato(sc: int, sp: int, idx_calc: int, idx_port: int, nuovi_punte
 	if sp != 0:
 		portiere_node.get_node("AnimatedSprite2D").play(ANIM_PORTIERE[sp])
 
-	# TESTI ED EFFETTI FOLLA
+	var calc_name = _get_player_name(idx_calc)
+	var port_name = _get_player_name(idx_port)
+
 	if sc == 0 and sp == 0: 
-		messaggi.text = "Timeout! P%d e P%d perdono 1 punto" % [idx_calc + 1, idx_port + 1]
+		messaggi.text = "Timeout! %s e %s perdono 1 punto" % [calc_name, port_name]
 		if audio_sbagliato: audio_sbagliato.play()
 	elif sc == 0: 
-		messaggi.text = "P%d non ha tirato!\nPunto a P%d" % [idx_calc + 1, idx_port + 1]
+		messaggi.text = "%s non ha tirato!\nPunto a %s" % [calc_name, port_name]
 		if audio_sbagliato: audio_sbagliato.play()
 	elif sp == 0: 
-		messaggi.text = "P%d fermo!\nGOAL di P%d" % [idx_port + 1, idx_calc + 1]
+		messaggi.text = "%s fermo!\nGOAL di %s" % [port_name, calc_name]
 		if audio_gol: audio_gol.play()
 	elif sc != sp: 
-		messaggi.text = "GOAL! P%d segna!\nTiro: %s | Parata: %s" % [idx_calc + 1, NOME_DIR[sc], NOME_DIR[sp]]
+		messaggi.text = "GOAL! %s segna!\nTiro: %s | Parata: %s" % [calc_name, NOME_DIR[sc], NOME_DIR[sp]]
 		if audio_gol: audio_gol.play()
 	else: 
-		messaggi.text = "PARATA! P%d blocca %s!" % [idx_port + 1, NOME_DIR[sc]]
+		messaggi.text = "PARATA! %s blocca %s!" % [port_name, NOME_DIR[sc]]
 		if audio_sbagliato: audio_sbagliato.play()
 
 	_aggiorna_ui()
@@ -279,7 +299,7 @@ func _sync_messaggio_prossimo_tiro(idx_calciatore: int) -> void:
 	calciatore_corrente = idx_calciatore
 	fase = Fase.MESSAGGIO
 	_reset_animazioni()
-	messaggi.text = "Tocca a P%d!" % (idx_calciatore + 1)
+	messaggi.text = "Tocca a %s!" % _get_player_name(idx_calciatore)
 
 func _fine_gioco_server() -> void:
 	var classifica: Array[int] = []
@@ -306,8 +326,8 @@ func _sync_fine_gioco(classifica: Array, punteggi_finali: Array) -> void:
 	var testo = "=== FINE PARTITA ===\n\n"
 	for pos in range(classifica.size()):
 		var g = classifica[pos]
-		var tag = " (BOT)" if GlobalData.players_data[g].get("is_bot", false) else ""
-		testo += "%d. P%d%s - %d pt\n" % [pos + 1, g + 1, tag, punteggi[g]]
+		var nome = _get_player_name(g)
+		testo += "%d. %s - %d pt\n" % [pos + 1, nome, punteggi[g]]
 		
 	messaggi.text = testo
 	_aggiorna_ui()
@@ -324,11 +344,18 @@ func _giocatori_attivi() -> Array[int]:
 
 func _aggiorna_ui() -> void:
 	var l_nodes = [label_g1, label_g2, label_g3, label_g4]
+	var my_id = multiplayer.get_unique_id()
+	
 	for i in range(4):
 		if i < GlobalData.players_data.size():
 			var p_data = GlobalData.players_data[i]
-			var nome = "P" + str(p_data["id"]) if not p_data.get("is_bot", false) else "BOT " + str(i+1)
+			var nome = _get_player_name(i)
 			l_nodes[i].text = nome + ": " + str(punteggi[i])
+			
+			if p_data["id"] == my_id and not p_data.get("is_bot", false):
+				l_nodes[i].modulate = Color(1, 1, 0)
+			else:
+				l_nodes[i].modulate = Color(1, 1, 1)
 
 func _reset_animazioni():
 	portiere_node.get_node("AnimatedSprite2D").play("Fermo")

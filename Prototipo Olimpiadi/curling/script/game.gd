@@ -15,8 +15,7 @@ var current_state: GameState = GameState.REVEAL
 @onready var countdown_label: Label = $UI/CountdownLabel
 @onready var winner_label: Label = $UI/WinnerLabel
 
-# --- NUOVI NODI VISIVI ---
-# Usiamo get_node_or_null così il gioco non crasha se dimentichi di crearli!
+# --- NODI VISIVI ---
 @onready var role_label: Label = get_node_or_null("UI/RoleLabel")
 @onready var scopa_sprite: Sprite2D = get_node_or_null("ScopaSprite")
 
@@ -51,13 +50,14 @@ func _ready() -> void:
 	if scopa_sprite:
 		scopa_sprite.hide()
 	
+	# PREVENZIONE CRASH (Test F6)
 	if GlobalData.players_data.is_empty():
 		print("ATTENZIONE: Avvio Standalone Curling. Generazione Bot in corso...")
 		var peer = ENetMultiplayerPeer.new()
 		peer.create_server(12345, 4)
 		multiplayer.multiplayer_peer = peer
 		for i in range(4):
-			GlobalData.players_data.append({"id": i+1, "is_bot": i > 0})
+			GlobalData.players_data.append({"id": 1 if i==0 else i+100, "is_bot": i>0, "name": "Tester" if i==0 else "BOT"})
 			
 	team_reveal_label.hide()
 	countdown_label.hide()
@@ -108,14 +108,19 @@ func client_sync_teams(t1: Array, t2: Array):
 	
 	_play_countdown()
 
+# --- INTEGRAZIONE NICKNAME (CURLING) ---
 func _get_player_info(player_data: Dictionary) -> String:
 	var p_index = player_data["index"]
 	var p_data = GlobalData.players_data[p_index]
-	var name = "Player " + str(p_data["id"]) if not p_data.get("is_bot", false) else "BOT"
+	
+	var name = p_data.get("name", "Giocatore")
+	if p_data.get("is_bot", false) and not name.begins_with("BOT"):
+		name += " (BOT)"
+		
 	return "- " + player_data["role"] + ": " + name
 
 func _play_countdown():
-	for i in range(5, 0, -1):
+	for i in range(8, 0, -1):
 		countdown_label.text = "Inizio tra: " + str(i)
 		await get_tree().create_timer(1.0).timeout
 		
@@ -154,7 +159,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	var is_thrower = (t_data["id"] == my_id and not t_data.get("is_bot", false))
 	var is_sweeper = (s_data["id"] == my_id and not s_data.get("is_bot", false))
 
-	# Input Lanciatore
 	if is_thrower and not check_stop and current_stone != null:
 		if event.is_action_pressed("action"):
 			clicked = true
@@ -169,7 +173,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				current_impulse = current_impulse.normalized() * MAX_POWER
 			queue_redraw()
 
-	# Input Spazzatore
 	if is_sweeper and check_stop:
 		if event.is_action_pressed("ui_up"): 
 			server_request_sweep.rpc_id(1, Vector2(0, -1))
@@ -217,25 +220,20 @@ func _server_execute_sweep(dir: Vector2):
 		c_vel.y = clamp(c_vel.y, -MAX_SWEEP_SPEED, MAX_SWEEP_SPEED)
 		active_stone.linear_velocity = c_vel
 		
-		# AVVISA I CLIENT DI MOSTRARE LA SCOPA
 		client_show_sweep_effect.rpc(dir, active_stone.global_position)
 
-# --- NUOVA RPC: ANIMAZIONE DELLA SPAZZATA ---
 @rpc("authority", "call_local", "unreliable")
 func client_show_sweep_effect(dir: Vector2, stone_pos: Vector2):
 	if scopa_sprite == null: return
 	
-	# La scopa si posiziona leggermente davanti alla pietra (basato sulla direzione)
 	scopa_sprite.global_position = stone_pos + (dir * 30.0)
-	scopa_sprite.modulate.a = 1.0 # Resetta la trasparenza
+	scopa_sprite.modulate.a = 1.0 
 	scopa_sprite.show()
 	
-	# Crea una piccola animazione di sfregamento che sposta la scopa e la fa svanire
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(scopa_sprite, "global_position", stone_pos + (dir * 55.0), 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.tween_property(scopa_sprite, "modulate:a", 0.0, 0.3).set_delay(0.1)
 	
-	# Quando l'animazione finisce, nasconde lo sprite in automatico
 	tween.chain().tween_callback(scopa_sprite.hide)
 
 func _physics_process(delta: float) -> void:
@@ -352,10 +350,10 @@ func _server_calculate_score() -> void:
 	
 	if score_team_1 > score_team_2:
 		winners = [teams[0][0]["index"], teams[0][1]["index"]]
-		msg = "Vittoria per il TEAM 1 (Rosso)!\n" + _get_team_string(teams[0])
+		msg = "Vittoria TEAM 1!\n" + _get_team_string(teams[0])
 	elif score_team_2 > score_team_1:
 		winners = [teams[1][0]["index"], teams[1][1]["index"]]
-		msg = "Vittoria per il TEAM 2 (Giallo)!\n" + _get_team_string(teams[1])
+		msg = "Vittoria TEAM 2!\n" + _get_team_string(teams[1])
 	else:
 		msg = "PAREGGIO!\nNessun passo bonus."
 		
@@ -368,8 +366,11 @@ func _server_calculate_score() -> void:
 func _get_team_string(t_array: Array) -> String:
 	var s = ""
 	for p in t_array:
-		var id = GlobalData.players_data[p["index"]]["id"]
-		s += "Player " + str(id) + "\n" if not GlobalData.players_data[p["index"]].get("is_bot", false) else "BOT\n"
+		var p_data = GlobalData.players_data[p["index"]]
+		var nome = p_data.get("name", "Giocatore")
+		if p_data.get("is_bot", false) and not nome.begins_with("BOT"):
+			nome += " (BOT)"
+		s += nome + "\n"
 	return s
 
 @rpc("authority", "call_local", "reliable")
@@ -383,17 +384,16 @@ func aggiorna_ui() -> void:
 	stones_label.text = " | Stones rimaste: " + str(MAX_STONES - stones_thrown) + " | "
 	score_label.text = "Punti: T1 [" + str(score_team_1) + "] - T2 [" + str(score_team_2) + "]"
 	
-	# --- NUOVO: AGGIORNAMENTO TESTO RUOLO CLIENT E TEAM ---
 	if role_label and not teams[0].is_empty():
 		var my_id = multiplayer.get_unique_id()
-		var my_role_text = "Spettatore (Bot Test)"
+		var my_role_text = "Spettatore"
 		
 		for t_idx in range(teams.size()):
 			var nome_team = "TEAM 1 (Rosso)" if t_idx == 0 else "TEAM 2 (Giallo)"
 			
 			for p in teams[t_idx]:
 				if GlobalData.players_data[p["index"]]["id"] == my_id and not GlobalData.players_data[p["index"]].get("is_bot", false):
-					var stato = " (E' IL TUO TURNO!)" if current_turn == t_idx else " (In attesa...)"
+					var stato = " (TURNO TUO!)" if current_turn == t_idx else " (In attesa...)"
 					my_role_text = nome_team + " | Ruolo: " + p["role"] + stato
 					
 		role_label.text = my_role_text

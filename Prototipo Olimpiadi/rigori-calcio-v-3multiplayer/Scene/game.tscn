@@ -24,6 +24,8 @@ font_size = 38
 [sub_resource type="LabelSettings" id="LabelSettings_8f6ah"]
 font_size = 38
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_ct7me"]
+
 [node name="Game" type="Node" unique_id=1588676377]
 script = ExtResource("1_h8jt7")
 
@@ -68,6 +70,12 @@ anchor_bottom = 0.11100001
 offset_left = 2.0
 offset_right = -0.016021729
 offset_bottom = 0.07199097
+theme_override_colors/font_shadow_color = Color(0.8729615, 0.3470688, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 2
 text = "Giocatore 1 : 0"
 label_settings = SubResource("LabelSettings_thj8p")
 
@@ -76,10 +84,16 @@ anchors_preset = -1
 anchor_left = 0.24700001
 anchor_right = 0.528
 anchor_bottom = 0.108
-offset_left = 1.4559937
-offset_top = 1.0
-offset_right = 1.7440186
-offset_bottom = 3.0159988
+offset_left = -282.544
+offset_top = 48.0
+offset_right = -282.25598
+offset_bottom = 50.016
+theme_override_colors/font_shadow_color = Color(0.8729615, 0.3470688, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 2
 text = "Giocatore 2 : 0"
 label_settings = SubResource("LabelSettings_thj8p")
 
@@ -95,10 +109,10 @@ anchor_left = 0.503
 anchor_top = -0.002
 anchor_right = 0.73200005
 anchor_bottom = 0.083000004
-offset_left = -1.4560547
-offset_top = 6.296
-offset_right = -2.264038
-offset_bottom = 6.215996
+offset_left = -577.45605
+offset_top = 105.296
+offset_right = -578.26404
+offset_bottom = 105.215996
 text = "Giocatore 3 : 0"
 label_settings = SubResource("LabelSettings_sagxc")
 
@@ -107,12 +121,25 @@ anchors_preset = -1
 anchor_left = 0.75900006
 anchor_right = 0.98700005
 anchor_bottom = 0.086
-offset_left = -0.368042
-offset_top = 6.0
-offset_right = -0.024047852
-offset_bottom = 6.2719994
+offset_left = -872.36804
+offset_top = 159.0
+offset_right = -872.02405
+offset_bottom = 159.272
+theme_override_colors/font_shadow_color = Color(0.8729615, 0.3470688, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 2
 text = "Giocatore 4 : 0"
 label_settings = SubResource("LabelSettings_8f6ah")
+
+[node name="background" type="TextureRect" parent="punteggioCambiGiocatori" unique_id=2092456276]
+modulate = Color(0.23960575, 0.23960575, 0.23960575, 0.8901961)
+z_index = -1
+offset_right = 284.0
+offset_bottom = 226.0
+texture = SubResource("CanvasTexture_ct7me")
 
 [node name="TimerTiroPalla" type="Timer" parent="." unique_id=440903773]
 wait_time = 10.0

@@ -67,11 +67,12 @@ func _ready() -> void:
 	pos_inizio_sinistro = schermitore_sinistro.global_position
 
 	if GlobalData.players_data.is_empty():
+		print("ATTENZIONE: Avvio Standalone Scherma. Generazione Bot in corso...")
 		var peer = ENetMultiplayerPeer.new()
 		peer.create_server(12345, 4)
 		multiplayer.multiplayer_peer = peer
 		for i in range(4):
-			GlobalData.players_data.append({"id": i+1, "is_bot": i > 0})
+			GlobalData.players_data.append({"id": 1 if i==0 else i+100, "is_bot": i>0, "name": "Tester" if i==0 else "BOT"})
 
 	if multiplayer.is_server():
 		timer_colpo.wait_time  = 2.0
@@ -87,6 +88,20 @@ func _ready() -> void:
 
 		await get_tree().create_timer(1.0).timeout
 		_sorteggia_e_avvia()
+
+# --- INTEGRAZIONE NICKNAME UNIVERSALE ---
+func _nome_giocatore(idx: int) -> String:
+	if idx < 0 or idx >= GlobalData.players_data.size(): return "???"
+	var p_data = GlobalData.players_data[idx]
+	var nome = p_data.get("name", "Giocatore")
+	
+	if p_data.get("is_bot", false) and not nome.begins_with("BOT"):
+		var bot_count = 1
+		for j in range(idx):
+			if GlobalData.players_data[j].get("is_bot", false): bot_count += 1
+		nome = "BOT " + str(bot_count)
+		
+	return nome
 
 # =========================================================
 #  SORTEGGIO E GESTIONE ROUND (Server-Side)
@@ -129,7 +144,8 @@ func client_avvia_round(round_num: int, acc: Array) -> void:
 	var my_id = multiplayer.get_unique_id()
 	var in_game = false
 	for ruolo in [idx_sinistro, idx_destro]:
-		if GlobalData.players_data[ruolo]["id"] == my_id: in_game = true
+		if GlobalData.players_data[ruolo]["id"] == my_id and not GlobalData.players_data[ruolo].get("is_bot", false): 
+			in_game = true
 	
 	if not in_game and my_id != 1:
 		messaggi.text += "\n\n[ SEI IN PANCHINA, ATTENDI IL TUO TURNO ]"
@@ -445,13 +461,6 @@ func _è_bot(idx: int) -> bool:
 	if idx < 0 or idx >= GlobalData.players_data.size(): return true
 	return GlobalData.players_data[idx].get("is_bot", false)
 
-func _nome_giocatore(idx: int) -> String:
-	if idx < 0 or idx >= GlobalData.players_data.size(): return "???"
-	var d = GlobalData.players_data[idx]
-	var n = "P" + str(d["id"])
-	if d.get("is_bot", false): n = "Bot " + str(idx + 1)
-	return n
-
 func _secondo() -> int:
 	return accoppiamenti[2][1] if accoppiamenti[2][0] == vincitore_fin else accoppiamenti[2][0]
 
@@ -461,5 +470,18 @@ func _perdente(round_idx: int) -> int:
 	return des if (round_idx == 0 and vincitore_r1 == sin) or (round_idx == 1 and vincitore_r2 == sin) else sin
 
 func _aggiorna_ui_punti() -> void:
+	var my_id = multiplayer.get_unique_id()
+	
 	punti_g_sinistro.text = "%s: %d" % [_nome_giocatore(idx_sinistro), punti_sinistro]
 	punti_g_destro.text   = "%s: %d" % [_nome_giocatore(idx_destro),   punti_destro]
+	
+	# Evidenzia in Giallo il tuo punteggio se stai giocando nel round attuale
+	if not _è_bot(idx_sinistro) and GlobalData.players_data[idx_sinistro]["id"] == my_id:
+		punti_g_sinistro.modulate = Color(1, 1, 0)
+	else:
+		punti_g_sinistro.modulate = Color(1, 1, 1)
+		
+	if not _è_bot(idx_destro) and GlobalData.players_data[idx_destro]["id"] == my_id:
+		punti_g_destro.modulate = Color(1, 1, 0)
+	else:
+		punti_g_destro.modulate = Color(1, 1, 1)

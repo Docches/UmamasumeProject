@@ -44,6 +44,11 @@ func _ready():
 	countdown_label.hide()
 	winner_label.hide()
 	
+	# PREVENZIONE CRASH: Test Standalone (F6)
+	if GlobalData.players_data.is_empty():
+		for i in range(4):
+			GlobalData.players_data.append({"id": 1 if i==0 else i+100, "is_bot": i>0, "name": "Tester" if i==0 else "BOT"})
+	
 	if multiplayer.is_server():
 		for p in GlobalData.players_data:
 			if not p.get("is_bot", false):
@@ -107,13 +112,21 @@ func client_update_selection(horse_index: int, player_index: int):
 	buttons[horse_index].disabled = true
 	
 	var p_data = GlobalData.players_data[player_index]
-	var text = "Player " + str(p_data["id"]) if not p_data.get("is_bot", false) else "BOT"
+	var my_id = multiplayer.get_unique_id()
 	
-	if p_data["id"] == multiplayer.get_unique_id():
-		for btn in buttons:
-			btn.disabled = true
-			
+	# --- INTEGRAZIONE NICKNAME SUI BOTTONI ---
+	var text = p_data.get("name", "Giocatore")
+	if p_data.get("is_bot", false) and not text.begins_with("BOT"):
+		text += " (BOT)"
+		
 	labels[horse_index].text = text
+	
+	if p_data["id"] == my_id and not p_data.get("is_bot", false):
+		labels[horse_index].modulate = Color(1, 1, 0) # Giallo per te
+		for btn in buttons:
+			btn.disabled = true # Hai già scelto, disabilita gli altri tasti
+	else:
+		labels[horse_index].modulate = Color(1, 1, 1)
 
 # --- 2. FASE COUNTDOWN E SPAWN ---
 
@@ -148,7 +161,6 @@ func client_spawn_horse(horse_index: int, start_pos: Vector2):
 	var runner = player_scene.instantiate()
 	runner.position = start_pos
 	
-	# Disabilitiamo la fisica locale del cavallo: ora è un burattino del server
 	runner.set_process(false)
 	runner.set_physics_process(false)
 	if runner is RigidBody2D: runner.freeze = true
@@ -159,10 +171,9 @@ func client_spawn_horse(horse_index: int, start_pos: Vector2):
 		horses_nodes.resize(4)
 	horses_nodes[horse_index] = runner
 
-# --- 3. FASE GARA E LOGICA SUSPENSE (SERVER-SIDE) ---
+# --- 3. FASE GARA ---
 
 func _physics_process(delta):
-	# Si muovono SOLO quando lo stato è RACING
 	if current_state != GameState.RACING: return
 	
 	if multiplayer.is_server():
@@ -170,7 +181,6 @@ func _physics_process(delta):
 		var winner_horse_idx = -1
 		
 		for i in range(4):
-			# --- LOGICA SUSPENSE ---
 			change_speed_timer[i] -= delta
 			if change_speed_timer[i] <= 0:
 				var roll = randf()
@@ -187,16 +197,13 @@ func _physics_process(delta):
 			horses_run_speed[i] = lerpf(horses_run_speed[i], horses_target_speed[i], 4.0 * delta)
 			horses_pos[i].x += horses_run_speed[i] * delta
 			
-			# Controlla Traguardo
 			if horses_pos[i].x >= FINISH_LINE_X and not someone_finished:
 				someone_finished = true
 				winner_horse_idx = i
 		
-		# Sincronizza le posizioni con i client
 		client_sync_race.rpc(horses_pos)
 		
 		if someone_finished:
-			# Imposta FINISHED: il _physics_process si congela e nessuno si muove più!
 			current_state = GameState.FINISHED
 			_server_declare_winner(winner_horse_idx)
 
@@ -220,10 +227,13 @@ func _server_declare_winner(horse_index: int):
 @rpc("authority", "call_local", "reliable")
 func client_show_winner(player_index: int):
 	var p_data = GlobalData.players_data[player_index]
-	var text = "HA VINTO PLAYER " + str(p_data["id"])
-	if p_data.get("is_bot", false): text = "HA VINTO UN BOT!"
 	
-	winner_label.text = text + "\n+3 Passi Bonus!"
+	# --- INTEGRAZIONE NICKNAME NELLA VITTORIA ---
+	var nome = p_data.get("name", "Giocatore")
+	if p_data.get("is_bot", false) and not nome.begins_with("BOT"):
+		nome += " (BOT)"
+		
+	winner_label.text = "🏆 " + nome + " TRIONFA! 🏆\n+3 Passi Bonus!"
 	winner_label.show()
 
 @rpc("authority", "call_local", "reliable")

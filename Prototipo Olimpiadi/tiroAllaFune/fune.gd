@@ -29,6 +29,15 @@ func _ready() -> void:
 	status_label.text = ""
 	tutorial_panel.show()
 	
+	# PREVENZIONE CRASH (Test F6)
+	if GlobalData.players_data.is_empty():
+		print("ATTENZIONE: Avvio Standalone Fune. Generazione Bot in corso...")
+		var peer = ENetMultiplayerPeer.new()
+		peer.create_server(12345, 4)
+		multiplayer.multiplayer_peer = peer
+		for i in range(4):
+			GlobalData.players_data.append({"id": 1 if i==0 else i+100, "is_bot": i>0, "name": "Tester" if i==0 else "BOT"})
+	
 	_applica_sprite_personalizzati()
 	_assegna_slot_locale()
 	_compila_testi_tutorial()
@@ -48,19 +57,45 @@ func _assegna_slot_locale() -> void:
 			my_slot_index = i
 			break
 
+# --- INTEGRAZIONE NICKNAME UNIVERSALE ---
+func _get_player_name(idx: int) -> String:
+	if idx < 0 or idx >= GlobalData.players_data.size(): return "???"
+	var p_data = GlobalData.players_data[idx]
+	var nome = p_data.get("name", "Giocatore")
+	
+	if p_data.get("is_bot", false) and not nome.begins_with("BOT"):
+		var bot_count = 1
+		for j in range(idx):
+			if GlobalData.players_data[j].get("is_bot", false): bot_count += 1
+		nome = "BOT " + str(bot_count)
+		
+	return nome
+
 func _compila_testi_tutorial() -> void:
 	var testo_sx = "TEAM SINISTRA (Spazio per tirare):\n"
 	var testo_dx = "TEAM DESTRA (Spazio per tirare):\n"
 	
+	var my_id = multiplayer.get_unique_id()
+	
 	for i in range(GlobalData.players_data.size()):
 		var p = GlobalData.players_data[i]
-		var nome = "Bot " + str(i+1) if p.get("is_bot", false) else "Player " + str(p["id"])
+		var nome = _get_player_name(i)
+		
+		if p["id"] == my_id and not p.get("is_bot", false):
+			nome = "[color=yellow]" + nome + " (TU)[/color]"
+			if i < 2:
+				testo_sx = "[color=yellow]" + testo_sx + "[/color]"
+			else:
+				testo_dx = "[color=yellow]" + testo_dx + "[/color]"
 		
 		if i < 2: testo_sx += "- " + nome + "\n"
 		else: testo_dx += "- " + nome + "\n"
 			
 	team_sx_label.text = testo_sx
 	team_dx_label.text = testo_dx
+	
+	# Abilita il BBCode (colori) nei nodi Label se necessario (RichTextLabel)
+	# Per compatibilità base lasciamo Label semplice, se usi RichText vedrai i colori.
 
 func _applica_sprite_personalizzati() -> void:
 	if immagine_fazzoletto:
@@ -129,7 +164,6 @@ func _process(delta: float) -> void:
 		bot_timers[bot_index] -= delta
 		if bot_timers[bot_index] <= 0.0:
 			_server_process_pull(bot_index)
-			# Randomizza la frequenza di pull per i bot
 			bot_timers[bot_index] = randf_range(0.18, 0.28)
 
 func _server_process_pull(slot: int) -> void:
@@ -151,14 +185,17 @@ func _server_check_win_condition() -> void:
 	elif fazzoletto.position.x >= WIN_LIMIT_RIGHT:
 		_server_declare_winner("DESTRA", [2, 3])
 
-func _server_declare_winner(team_name: String, winner_slots: Array) -> void:
+func _server_declare_winner(team_side: String, winner_slots: Array) -> void:
 	current_state = GameState.ENDED
 	client_sync_state.rpc(GameState.ENDED)
 	
 	GlobalData.minigame_winners = winner_slots.duplicate()
-	client_show_winner_ui.rpc(team_name)
 	
-	await get_tree().create_timer(3.0).timeout
+	var nomi_vincitori = _get_player_name(winner_slots[0]) + " & " + _get_player_name(winner_slots[1])
+	
+	client_show_winner_ui.rpc(nomi_vincitori)
+	
+	await get_tree().create_timer(4.0).timeout
 	client_ritorna_al_tabellone.rpc()
 
 @rpc("authority", "call_local", "unreliable_ordered")
@@ -185,8 +222,8 @@ func client_sync_countdown(text: String) -> void:
 	countdown_label.text = text
 
 @rpc("authority", "call_local", "reliable")
-func client_show_winner_ui(team_name: String) -> void:
-	status_label.text = "VITTORIA DEL TEAM DI " + team_name + "!"
+func client_show_winner_ui(nomi_vincitori: String) -> void:
+	status_label.text = "🏆 VITTORIA PER " + nomi_vincitori + "! 🏆"
 	countdown_label.text = ""
 
 @rpc("authority", "call_local", "reliable")

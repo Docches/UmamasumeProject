@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cxe5f0461a1hd" path="res://menu/menu.gd" id="1_j0t7f"]
 [ext_resource type="Texture2D" uid="uid://dtej4iclqq0ps" path="res://Olympic Rumble.png" id="2_g18jx"]
-[ext_resource type="AudioStream" uid="uid://debc0ok6fptjq" path="res://menu/sound/ost.wav" id="3_6nwqt"]
+[ext_resource type="AudioStream" uid="uid://dnf8xhlousu8j" path="res://musica/ostTabellone.mp3" id="3_6nwqt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0, 0, 0, 0.85)
@@ -84,7 +84,7 @@ offset_top = 20.0
 offset_right = 230.0
 offset_bottom = 70.0
 theme_override_font_sizes/font_size = 24
-placeholder_text = "Inserisci IP..."
+placeholder_text = "Inserisci Codice"
 
 [node name="JoinButton" type="Button" parent="MainMenuUI/JoinContainer" unique_id=772139412]
 layout_mode = 0
@@ -177,6 +177,27 @@ stream = ExtResource("3_6nwqt")
 volume_db = 1.944
 autoplay = true
 panning_strength = 0.0
+
+[node name="NameInput" type="LineEdit" parent="." unique_id=2056174739]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 87.0
+offset_right = 491.0
+offset_bottom = 122.0
+placeholder_text = "Es. Special-Week; Oguri Cap"
+
+[node name="InserireNome" type="Label" parent="NameInput" unique_id=407420122]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.32900003
+offset_left = -132.0
+offset_top = 3.0
+offset_right = -4.0
+offset_bottom = 25.484999
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+text = "INSERISCI NOME"
 
 [connection signal="pressed" from="MainMenuUI/SoloButton" to="." method="_on_solo_button_pressed"]
 [connection signal="pressed" from="MainMenuUI/HostButton" to="." method="_on_host_button_pressed"]

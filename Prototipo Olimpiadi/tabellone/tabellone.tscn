@@ -15,6 +15,7 @@
 [ext_resource type="VideoStream" uid="uid://1u8vxpvsqkyj" path="res://tabellone/umas/Congratulazioni_Giocatore_1.ogv" id="14_58o12"]
 [ext_resource type="VideoStream" uid="uid://b46nw4saconce" path="res://tabellone/umas/Congratulazioni_Giocatore_2.ogv" id="15_fhjsv"]
 [ext_resource type="VideoStream" uid="uid://ddq63kejnisy1" path="res://tabellone/umas/Congratulazioni_Giocatore_3.ogv" id="16_7kv8j"]
+[ext_resource type="AudioStream" uid="uid://3wxlk7e2dopq" path="res://musica/ostTabelloneReal.wav" id="17_58o12"]
 [ext_resource type="VideoStream" uid="uid://ble2bc8ue4uh8" path="res://tabellone/umas/Congratulazioni_Giocatore_4.ogv" id="17_bhepl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_BG"]
@@ -58,6 +59,10 @@ visible = false
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_kinqb")
 
+[node name="NameLabel" type="Label" parent="Players_Player1#sprite" unique_id=1574459515]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="Players#Player2" type="Node2D" parent="." unique_id=1198177502]
 script = ExtResource("2_kinqb")
 
@@ -66,6 +71,10 @@ visible = false
 modulate = Color(1, 0, 1, 1)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_kinqb")
+
+[node name="NameLabel" type="Label" parent="Players_Player2#sprite2" unique_id=1843747569]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="Players#Player3" type="Node2D" parent="." unique_id=1163013586]
 script = ExtResource("2_kinqb")
@@ -76,6 +85,10 @@ modulate = Color(0.78, 0.58, 0.25, 1)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_kinqb")
 
+[node name="NameLabel" type="Label" parent="Players_Player3#sprite3" unique_id=604054439]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="Players#Player4" type="Node2D" parent="." unique_id=974154461]
 script = ExtResource("2_kinqb")
 
@@ -84,6 +97,10 @@ visible = false
 modulate = Color(0, 0.74, 0.4, 1)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_kinqb")
+
+[node name="NameLabel" type="Label" parent="Players_Player4#sprite4" unique_id=1694546724]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1886148213]
 
@@ -311,3 +328,7 @@ offset_right = 1921.0
 offset_bottom = 1083.0
 scale = Vector2(0.6, 0.6)
 stream = ExtResource("17_bhepl")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=127277219]
+stream = ExtResource("17_58o12")
+autoplay = true

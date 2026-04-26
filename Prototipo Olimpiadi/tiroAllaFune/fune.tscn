@@ -28,10 +28,18 @@ modulate = Color(0, 0.4, 1, 1)
 position = Vector2(250, 300)
 texture = SubResource("PlaceholderTexture2D_1")
 
+[node name="NameLabel" type="Label" parent="TeamSinistra/Player0" unique_id=1106015091]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="Player1" type="Sprite2D" parent="TeamSinistra" unique_id=1943554860]
 modulate = Color(0, 0.4, 1, 1)
 position = Vector2(150, 300)
 texture = SubResource("PlaceholderTexture2D_1")
+
+[node name="NameLabel" type="Label" parent="TeamSinistra/Player1" unique_id=1246651623]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="TeamDestra" type="Node2D" parent="." unique_id=351022512]
 
@@ -40,10 +48,18 @@ modulate = Color(0, 0.8, 0, 1)
 position = Vector2(900, 300)
 texture = SubResource("PlaceholderTexture2D_1")
 
+[node name="NameLabel" type="Label" parent="TeamDestra/Player2" unique_id=1174860458]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="Player3" type="Sprite2D" parent="TeamDestra" unique_id=436698602]
 modulate = Color(0, 0.8, 0, 1)
 position = Vector2(1000, 300)
 texture = SubResource("PlaceholderTexture2D_1")
+
+[node name="NameLabel" type="Label" parent="TeamDestra/Player3" unique_id=152724276]
+offset_right = 40.0
+offset_bottom = 23.0
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1930452548]
 

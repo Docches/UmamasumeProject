@@ -120,7 +120,6 @@ func _start_game_sequence():
 			bot_timers[i] = _calcola_tempo_bot(0)
 
 func _process(delta: float):
-	# I bot si fermano se il gioco è finito
 	if not multiplayer.is_server() or current_state != GameState.PLAYING: return
 	
 	for i in range(4):
@@ -140,17 +139,17 @@ func _calcola_tempo_bot(step_attuale: int) -> float:
 	var frecce_da_premere = step_attuale + 1 
 	return frecce_da_premere * randf_range(0.35, 0.55)
 
-# --- INPUT E LOGICA CLIENT (QTE ISOLATO) ---
+# --- INPUT E LOGICA CLIENT ---
 func _unhandled_input(event):
 	if my_slot == -1 or current_state != GameState.PLAYING: return
 	
+	# FIX TASTI: Rimessi quelli di default di Godot ("up", ecc.)
 	var keys = ["up", "down", "left", "right"]
 	for k in keys:
 		if event.is_action_pressed(k):
 			_process_qte_input(k)
 
 func _process_qte_input(key: String):
-	# FIX ANTICRASH: Se non ci sono frecce (es. hai già finito), ignora l'input
 	if current_qte_seq.is_empty(): return
 	
 	if key == current_qte_seq[local_qte_idx]:
@@ -176,6 +175,7 @@ func _process_qte_input(key: String):
 
 func _generate_new_qte(step_for_length: int):
 	current_qte_seq.clear()
+	# FIX TASTI
 	var keys = ["up", "down", "left", "right"]
 	var num_frecce = step_for_length + 1
 	
@@ -188,7 +188,6 @@ func _generate_new_qte(step_for_length: int):
 # --- RPC E SINCRONIZZAZIONE ---
 @rpc("any_peer", "call_local", "reliable")
 func server_apply_result(success: bool):
-	# FIX: Se il gioco è già finito, il server ignora i risultati ritardati degli altri
 	if not multiplayer.is_server() or current_state == GameState.FINISHED: return
 	
 	var id = multiplayer.get_remote_sender_id()
@@ -261,6 +260,7 @@ func client_start_game():
 func _update_qte_label(step_attuale: int):
 	var s = ""
 	for i in range(current_qte_seq.size()):
+		# FIX TASTI PER IL TESTO
 		var f = {"up":"↑","down":"↓","left":"←","right":"→"}[current_qte_seq[i]]
 		s += "[OK] " if i < local_qte_idx else f + " "
 	
@@ -273,20 +273,17 @@ func _flash_feedback(color: Color):
 
 # --- FINE PARTITA E CAMBIO SCENA ---
 func _declare_winner(i: int):
-	# Doppia sicurezza: evitiamo che venga chiamato due volte
 	if current_state == GameState.FINISHED: return 
 	current_state = GameState.FINISHED
 	
 	GlobalData.minigame_winners = [i]
 	client_show_winner.rpc(i)
 	
-	# Il server aspetta e POI fa cambiare scena a tutti
 	await get_tree().create_timer(3.5).timeout
 	client_cambia_scena.rpc()
 
 @rpc("authority", "call_local", "reliable")
 func client_show_winner(winner_idx: int):
-	# Ferma il gioco e pulisce la UI per TUTTI i client
 	current_state = GameState.FINISHED
 	current_qte_seq.clear()
 	qte_label.text = ""

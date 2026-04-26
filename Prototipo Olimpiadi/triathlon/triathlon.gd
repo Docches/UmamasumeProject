@@ -118,8 +118,8 @@ func _process(delta):
 		# Input continui per spostamenti e corsa
 		if my_slot_index != -1:
 			var acc = Input.is_action_pressed("ui_accept")
-			var up = Input.is_action_pressed("ui_up")
-			var down = Input.is_action_pressed("ui_down")
+			var up = Input.is_action_pressed("up")
+			var down = Input.is_action_pressed("down")
 			
 			if acc != last_acc or up != last_up or down != last_down:
 				rpc_id(1, "receive_input_state", my_slot_index, acc, up, down)
@@ -138,10 +138,10 @@ func _unhandled_input(event):
 		rpc_id(1, "receive_action_button", my_slot_index)
 		
 	# Gestione precissisima dei tasti QTE
-	if event.is_action_pressed("ui_up", false) and not event.is_echo(): rpc_id(1, "receive_qte", my_slot_index, "U")
-	if event.is_action_pressed("ui_down", false) and not event.is_echo(): rpc_id(1, "receive_qte", my_slot_index, "D")
-	if event.is_action_pressed("ui_left", false) and not event.is_echo(): rpc_id(1, "receive_qte", my_slot_index, "L")
-	if event.is_action_pressed("ui_right", false) and not event.is_echo(): rpc_id(1, "receive_qte", my_slot_index, "R")
+	if event.is_action_pressed("up", false) and not event.is_echo(): rpc_id(1, "receive_qte", my_slot_index, "U")
+	if event.is_action_pressed("down", false) and not event.is_echo(): rpc_id(1, "receive_qte", my_slot_index, "D")
+	if event.is_action_pressed("left", false) and not event.is_echo(): rpc_id(1, "receive_qte", my_slot_index, "L")
+	if event.is_action_pressed("right", false) and not event.is_echo(): rpc_id(1, "receive_qte", my_slot_index, "R")
 
 @rpc("any_peer", "call_local", "unreliable")
 func receive_input_state(slot: int, acc: bool, up: bool, down: bool):

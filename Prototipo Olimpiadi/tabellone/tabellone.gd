@@ -40,44 +40,48 @@ var space_links = {}
 var space_types = {}
 
 func _ready() -> void:
-
 	randomize()
 	
 	if GlobalData.players_data.is_empty():
 		print("ATTENZIONE: GlobalData vuoto. Generazione giocatori di test in corso...")
 		for i in range(4):
-			GlobalData.players_data.append({"id": 1 if i==0 else i+100, "is_bot": i > 0})
+			GlobalData.players_data.append({"id": 1 if i==0 else i+100, "is_bot": i > 0, "name": "Tester" if i==0 else "BOT"})
 			GlobalData.player_space_indices.append(0)
 			GlobalData.player_coins.append(0)
 			GlobalData.player_medals.append(0)
 	
-
 	generate_board()
 	players_node = Node2D.new()
 	players_node.name = "Players"
 	players_node.z_index = 10
 	add_child(players_node)
 	
+	# ==========================================
+	# --- NUOVO SISTEMA CARICAMENTO PEDINE ---
+	# ==========================================
 	for i in range(GlobalData.players_data.size()):
 		var p_sprite = Sprite2D.new()
-		p_sprite.texture = load("res://curling/icon.svg") 
-		p_sprite.scale = Vector2(0.3, 0.3)
 		
-		
+		# Carica una pedina diversa in base all'indice del giocatore
 		match i:
-			0: p_sprite.modulate = Color.WHITE
-			1: p_sprite.modulate = Color(1, 0, 1) 
-			2: p_sprite.modulate = Color(0.78, 0.58, 0.25) 
-			3: p_sprite.modulate = Color(0, 0.74, 0.40)
+			0: p_sprite.texture = load("res://tabellone/pedine/p1.png")
+			1: p_sprite.texture = load("res://tabellone/pedine/p2.png")
+			2: p_sprite.texture = load("res://tabellone/pedine/p3.png")
+			3: p_sprite.texture = load("res://tabellone/pedine/p4.png")
+			
+		# Scala le pedine (modifica questo valore se sono troppo grandi o piccole)
+		p_sprite.scale = Vector2(0.04, 0.04)
+		
+		# Spostiamo il centro del disegno verso il basso in modo che 
+		# i piedi poggino sulla casella, invece di farle volare a mezz'aria.
+		p_sprite.offset = Vector2(0, -450)
 			
 		players_node.add_child(p_sprite)
 		players.append(p_sprite)
 		player_current_spaces.append(0)
 	
-	
 	restore_board_state()
 	update_huds()
-	
 	
 	if multiplayer.is_server():
 		if GlobalData.current_turn > MAX_TURNS:
@@ -89,6 +93,19 @@ func _ready() -> void:
 		else:
 			update_ui.rpc(GlobalData.current_player_index)
 
+# --- INTEGRAZIONE NICKNAME UNIVERSALE ---
+func _get_player_name(idx: int) -> String:
+	if idx < 0 or idx >= GlobalData.players_data.size(): return "???"
+	var p_data = GlobalData.players_data[idx]
+	var nome = p_data.get("name", "Giocatore")
+	
+	if p_data.get("is_bot", false) and not nome.begins_with("BOT"):
+		var bot_count = 1
+		for j in range(idx):
+			if GlobalData.players_data[j].get("is_bot", false): bot_count += 1
+		nome = "BOT " + str(bot_count)
+		
+	return nome
 
 func generate_board():
 	var cols = 10
@@ -172,7 +189,6 @@ func _assign_space_properties(i: int, rect: ColorRect, icon: Label):
 		space_types[i] = SpaceType.NEUTRAL
 		rect.color = Color(0.95, 0.95, 0.85) if i % 2 == 0 else Color(0.9, 0.9, 0.7)
 
-
 func _process(_delta: float) -> void:
 	if current_state == GameState.DICE_ROLLING:
 		current_dice_number = randi_range(1, 6)
@@ -199,7 +215,6 @@ func start_dice_spin():
 	current_state = GameState.DICE_ROLLING
 	turn_label.text = "TIRA IL DADO!"
 
-
 @rpc("any_peer", "call_local", "reliable")
 func stop_dice_server(final_number: int):
 	if not multiplayer.is_server(): return
@@ -220,7 +235,6 @@ func lock_dice_ui(num: int):
 	tween.tween_property(dice_label, "scale", Vector2(1.2, 1.2), 0.1)
 	tween.tween_property(dice_label, "scale", Vector2(1.0, 1.0), 0.1)
 	tween.tween_property(dice_label, "modulate", Color.WHITE, 0.3)
-
 
 func _step_player():
 	if not multiplayer.is_server(): return
@@ -355,8 +369,9 @@ func sync_state(next_player_index: int, turn: int):
 @rpc("authority", "call_local", "reliable")
 func update_ui(p_index: int):
 	var current_p = GlobalData.players_data[p_index]
-	var txt = "Turno " + str(GlobalData.current_turn) + "/" + str(MAX_TURNS) + "\nGiocatore " + str(p_index + 1)
-	if current_p.get("is_bot", false): txt += " (BOT)"
+	var player_name = _get_player_name(p_index)
+	
+	var txt = "Turno " + str(GlobalData.current_turn) + "/" + str(MAX_TURNS) + "\n" + player_name
 	turn_label.text = txt
 	
 	if current_state == GameState.IDLE:
@@ -364,8 +379,10 @@ func update_ui(p_index: int):
 			dice_label.text = "[ Il Bot sta tirando... ]"
 		elif current_p["id"] == multiplayer.get_unique_id(): 
 			dice_label.text = "[ PREMI SPAZIO PER GIRARE ]"
+			dice_label.modulate = Color(1, 1, 0) # Giallo se tocca a te
 		else: 
-			dice_label.text = "[ Attendi il tuo turno ]"
+			dice_label.text = "[ Attendi il turno di " + player_name + " ]"
+			dice_label.modulate = Color(1, 1, 1)
 	
 	update_huds() 
 
@@ -376,21 +393,31 @@ func update_leaderboard_data(coins, medals):
 	update_huds()
 
 func update_huds():
+	var my_id = multiplayer.get_unique_id()
+	
 	for i in range(4):
 		if hud_nodes[i] == null: continue
 		
 		if i < GlobalData.players_data.size():
 			var p_data = GlobalData.players_data[i]
 			hud_nodes[i].show()
-			hud_nodes[i].get_node("Name").text = "Giocatore " + str(i + 1) + (" (BOT)" if p_data.get("is_bot", false) else "")
+			
+			var nome = _get_player_name(i)
+			# Se il nome è troppo lungo, lo taglia per l'HUD
+			if nome.length() > 10: nome = nome.substr(0, 10) + "."
+			hud_nodes[i].get_node("Name").text = nome
+			
 			hud_nodes[i].get_node("Stats").text = "🏅 " + str(GlobalData.player_medals[i]) + "\n🪙 " + str(GlobalData.player_coins[i])
 			
 			if i == GlobalData.current_player_index:
 				hud_nodes[i].modulate = Color(1.3, 1.3, 1.3, 1.0) 
 				hud_nodes[i].scale = Vector2(1.05, 1.05)
+				if p_data["id"] == my_id and not p_data.get("is_bot", false):
+					hud_nodes[i].get_node("Name").modulate = Color(1, 1, 0)
 			else:
 				hud_nodes[i].modulate = Color(1.0, 1.0, 1.0, 0.8)
 				hud_nodes[i].scale = Vector2(1.0, 1.0)
+				hud_nodes[i].get_node("Name").modulate = Color(1, 1, 1)
 		else:
 			hud_nodes[i].hide()
 
@@ -430,7 +457,6 @@ func start_minigame_sequence(new_turn: int):
 	await get_tree().create_timer(3.0).timeout
 	if multiplayer.is_server():
 		change_scene_all.rpc(minigame_scenes.pick_random().resource_path)
-		
 
 @rpc("authority", "call_local", "reliable")
 func change_scene_all(path: String):
@@ -448,16 +474,18 @@ func declare_winner():
 			if GlobalData.player_coins[i] > GlobalData.player_coins[winner_idx]:
 				winner_idx = i
 				
-	var winner_name = "Giocatore " + str(winner_idx + 1)
-	if GlobalData.players_data[winner_idx].get("is_bot", false):
-		winner_name += " (BOT)"
+	var winner_name = _get_player_name(winner_idx)
 		
 	turn_label.text = "🏆 FINE PARTITA 🏆"
 	turn_label.modulate = Color(1, 0.8, 0)
 	dice_label.text = "Vincitore Assoluto:\n" + winner_name + "!"
+	
 	await get_tree().create_timer(2.0).timeout
 	turn_label.visible = false
 	dice_label.visible = false
+	
+	$AudioStreamPlayer2D.stop()
+	
 	if winner_idx == 0:
 		win1.play()
 		await win1.finished
